@@ -12,20 +12,27 @@
         <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     </head>
     <body class="bg-gray-100 h-screen flex flex-col justify-center items-center">
-        <h1>KRAFTTO</h1>
-        <div>
-            <h3>당신은 {{ username }} 의 마니또입니다.</h3>
+
+        <h1 class="text-4xl font-bold mb-4">KRAFTTO</h1>
+
+        <div class="bg-white p-8 rounded-lg shadow-md w-1/2">
+            <h3 class="text-2xl font-semibold mb-4">
+                당신은 {{ username }} 의 마니또입니다.
+            </h3>
             <ul>
                 <li>{{ first_hint }}</li>
                 <li>{{ second_hint }}</li>
                 <li>{{ third_hint }}</li>
             </ul>
         </div>
-        <div>
-            <button>1주차 미션</button>
-            <button>2주차 미션</button>
-            <button>3주차 미션</button>
-            <button>4주차 미션</button>
+        <div class="text-center">
+            <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Start!</button>
+        </div>
+        <div class="text-center">
+            <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">1주차 미션</button>
+            <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">2주차 미션</button>
+            <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">3주차 미션</button>
+            <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">4주차 미션</button>
         </div>
     </body>
 </html>
