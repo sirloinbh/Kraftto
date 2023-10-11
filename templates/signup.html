@@ -19,21 +19,22 @@
             <h3 class="text-2xl font-semibold mb-4">
                 SignUp
             </h3>
-            <div>   
-                <form method="post">
-                    <input type="text" name="username" placeholder="username" required>
-                    <input type="text" name="email" placeholder="E-mail" required>
-                    <input type="password" name="password" placeholder="Password" required>
-                    <input type="password" name="passwordConfirm" placeholder="PasswordConfirm" required>
-                    <input type="text" name="OS" placeholder="what is your OS, Window or Mac?" required>
-                    <input type="text" name="gender" placeholder="what is your gender, male or female? " required>
-                    <input type="text" name="junglenumber" placeholder="what is your junglenumber, even or odd?" required>
+            <div class="border rounded p-4 mt-4">   
+                <form method="post" class="space-y-4">
+                    <input type="text" name="username" placeholder="Username" required class="w-3/4 p-2 border rounded mx-auto block">
+                    <input type="text" name="email" placeholder="E-mail" required class="w-3/4 p-2 border rounded mx-auto block">
+                    <input type="password" name="password" placeholder="Password" required class="w-3/4 p-2 border rounded mx-auto block">
+                    <input type="password" name="passwordConfirm" placeholder="Password Confirm" required class="w-3/4 p-2 border rounded mx-auto block">
+                    <input type="text" name="OS" placeholder="What is your OS, Windows or Mac?" required class="w-3/4 p-2 border rounded mx-auto block">
+                    <input type="text" name="gender" placeholder="What is your gender, male or female?" required class="w-3/4 p-2 border rounded mx-auto block">
+                    <input type="text" name="junglenumber" placeholder="What is your jungle number, even or odd?" required class="w-3/4 p-2 border rounded mx-auto block">
                     <div class="text-center">
                         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Sign Up</button>
                     </div>
                 </form>
             </div>
+            <p class="mt-4 text-gray-600 text-right">Already have an account? <a href="{{ url_for('login') }}" class="text-blue-500">Login</a></p>
         </div>
-        <p>Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
+
     </body>
 </html>
