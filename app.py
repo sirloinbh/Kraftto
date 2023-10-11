@@ -49,7 +49,7 @@ def signup():
             password).decode('utf-8')
         new_user = User(username=username, password=hashed_password)
         db.session.add(new_user)
-        db.session.commit()
+        db.session.commit(new_user)
         flash('Your account has been created!', 'success')
         return redirect(url_for('login'))
     return render_template('signup.html')
