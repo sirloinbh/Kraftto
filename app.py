@@ -1,6 +1,13 @@
 from flask import Flask, render_template, request, session, redirect, url_for, flash, jsonify
 from pymongo import MongoClient
 from modules.login import login_bp
+from modules.signup import signup_bp
+from modules.main import main_bp
+from modules.mission_complete import mission_complete_bp
+from modules.mission import mission_bp
+
+from modules.ramdom_manito import krafton_paticipants, user_datas
+
 
 app = Flask(__name__)
 client = MongoClient('localhost', 27017)
@@ -15,23 +22,17 @@ def main():
 # login
 app.register_blueprint(login_bp)
 
+# signup
+app.register_blueprint(signup_bp)
 
-@app.route('/signup', methods=['GET', 'POST'])
-def signup():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
+# main
+app.register_blueprint(main_bp)
 
-        doc = {
-            'username': username,
-            'password': password
-        }
+# mission
+app.register_blueprint(mission_bp)
 
-        db.user.insert_one(doc)
-
-        return redirect(url_for('login'))
-    else:
-        return render_template('signup.html')
+# mission Complete
+app.register_blueprint(mission_complete_bp)
 
 
 if __name__ == '__main__':
