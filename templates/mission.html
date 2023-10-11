@@ -23,16 +23,15 @@
                 <div>
                     <p>4개의 미션 중 랜덤 1개가 배정됩니다!</p>
                     <p> {{ random_mission }} </p>
+                    <p>미션을 완수하고, 응원의 메시지와 함께 미션 인증 버튼을 눌러주세요</p>
                 </div>
-                <div class="text-center">
-                    <form method="post">
-                        <input type="text" name="message" placeholder="응원의 메시지를 입력해주세요" required>
+                <div class="text-center mt-4">
+                    <form method="post" class="flex justify-center items-center space-x-4">
+                        <input type="text" name="message" placeholder="응원의 메시지를 입력해주세요" required class="w-1/2 p-2 border rounded">
                         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">미션인증</button>
                     </form>
                 </div>
-
             </div>
         </div>
-
     </body>
 </html>
