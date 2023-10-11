@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <title>
-            KRAFTTO main page
+            Login
         </title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,13 +12,20 @@
     <body>
         <h1>KRAFTTO</h1>
         <div>
-            <h3> 크래프또 설명</h3>
+            <h3>WEEK_{{ weeknumber }}  MISSION</h3>
             <div>
-                <p>당신은 누군가의 마니또가 됩니다. 마니또인걸 들키지 않고 도움을 주세요 </p>
-                <p>당신을 돕는 마니또가 존재합니다. 찾아보세요</p>
-                <p>매주 마니또 미션이 주어집니다 미션을 완수하면 당신의 마니또에 대한 힌트가 주어집니다.</p>
-                <button>Start!</button>
+                <p>4개의 미션 중 랜덤 1개가 배정됩니다!</p>
+                <p> {{ missionnumber }} </p>
             </div>
+            <div>
+                <form method="post">
+                    <input type="text" name="message" placeholder="미션인증을 위해 응원의 메시지를 입력해주세요" required>
+                    <button type="submit">미션인증</button>
+                </form>
+            </div>
+
+            
         </div>
+
     </body>
 </html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            Login
+        </title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="이 페이지는 Jinja2와 서버사이드 렌더링에 대한 정보를 제공합니다.">
+        <meta name="keywords" content="Jinja2, 서버사이드 렌더링, 웹 개발, 템플릿 엔진">
+    </head>
+    <body>
+        <h1>KRAFTTO</h1>
+        <div>
+            <h3>WEEK_{{ weeknumber }}  MISSION</h3>
+            <p>미션 완료</p>
+            <div>
+                <p>축하합니다! 모든 미션을 완료했습니다.</p>
+                <p> 당신의 마니또는 {{ username }} 입니다.</p>
+                <ul>
+                    <li>1주차 메시지 : {{ message1 }}</li>
+                    <li>2주차 메시지 : {{ message2 }}</li>
+                    <li>3주차 메시지 : {{ message3 }}</li>
+                    <li>4주차 메시지 : {{ message4 }}</li>
+                </ul>
+                    
+            </div>
+        </div>
+
+    </body>
+</html>
