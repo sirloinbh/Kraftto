@@ -10,15 +10,19 @@ mission_bp = Blueprint('mission', __name__)
 
 
 @mission_bp.route('/mission', methods=['GET', 'POST'])
-def weekly_mission():
+def mission():
     weeknumber = request.args.get("weeknumber")
+    print(weeknumber)
+    if weeknumber == '4':
+        return render_template('final_complete.html')
+
     random_mission = weekly_missions['mission1']
 
     if request.method == "POST":
         message = request.form.get("message")
         print(message)
         # POST = Message -> DB 전달
-        return redirect(url_for("get_user_data"))
+        return redirect(url_for("main.main"))
 
     return render_template('mission.html', weeknumber=weeknumber, random_mission=random_mission)
 
