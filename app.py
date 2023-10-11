@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, session, redirect, url_for, f
 from pymongo import MongoClient
 
 
+
 app = Flask(__name__)
 
 client = MongoClient('localhost', 27017)

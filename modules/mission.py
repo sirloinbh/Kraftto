@@ -1,24 +1,29 @@
+import random
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
-from ramdom_manito import krafton_paticipants, user_data
-
+from ramdom_manito import krafton_paticipants, user_datas
+from mission_data import weekly_missions
 app = Flask(__name__)
 
 
-@app.route('/mission', methods=['GET', 'POST'])
+@app.route('/main', methods=['GET', 'POST'])
 def get_user_data():
     # 랜덤으로 지정된 자신의 마니또 데이터를 불러오기.
-    return render_template(f'mission.html')
+    userdata = user_datas[0]
+    return render_template('main.html', userdata=userdata)
 
 
 @app.route('/mission', methods=['GET', 'POST'])
 def weekly_mission():
+    weeknumber = request.args.get("weeknumber")
+    random_mission = weekly_missions['mission1']
+
     if request.method == "POST":
-        message = request.form.get(message)
+        message = request.form.get("message")
+        print(message)
         # POST = Message -> DB 전달
         return redirect(url_for("get_user_data"))
 
-    # 주차별로 html 렌더링함.
-    return render_template('mission.html')
+    return render_template('mission.html', weeknumber=weeknumber, random_mission=random_mission)
 
 
 @app.route('/mission/complete', methods=['GET', 'POST'])
