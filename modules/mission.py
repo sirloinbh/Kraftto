@@ -24,8 +24,8 @@ def weekly_mission():
         return redirect(url_for("get_user_data"))
 
     return render_template('mission.html', weeknumber=weeknumber, random_mission=random_mission)
-
-
+    return render_template('mission.html')
+  
 @app.route('/mission/complete', methods=['GET', 'POST'])
 def weekly_mission_complete():
     # 미션 완료 페이지 렌더링
