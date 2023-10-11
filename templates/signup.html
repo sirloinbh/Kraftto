@@ -1,15 +1,31 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Sign Up</title>
-</head>
-<body>
-    <h1>Sign Up</h1>
-    <form method="POST">
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="password" name="password" placeholder="Password" required>
-        <button type="submit">Sign Up</button>
-    </form>
-    <p>Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
-</body>
+<html lang="en">
+    <head>
+        <title>
+            Sign Up
+        </title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="이 페이지는 Jinja2와 서버사이드 렌더링에 대한 정보를 제공합니다.">
+        <meta name="keywords" content="Jinja2, 서버사이드 렌더링, 웹 개발, 템플릿 엔진">
+    </head>
+    <body>
+        <h1>Sign Up</h1>
+        <div>
+            <h5>회원가입</h5>
+            <div>   
+                <form method="post">
+                    <input type="text" name="name" placeholder="name" required>
+                    <input type="text" name="email" placeholder="E-mail" required>
+                    <input type="password" name="password" placeholder="Password" required>
+                    <input type="password" name="passwordConfirm" placeholder="PasswordConfirm" required>
+                    <input type="text" name="OS" placeholder="what is your OS, Window or Mac?" required>
+                    <input type="text" name="gender" placeholder="what is your gender, male or female? " required>
+                    <input type="text" name="junglenumber" placeholder="what is your junglenumber, even or odd?" required>
+                    <button type="submit">Sign Up</button>
+                </form>
+            </div>
+        </div>
+        <p>Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
+    </body>
 </html>

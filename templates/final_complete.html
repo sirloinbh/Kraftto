@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <title>
-            KRAFTTO main page
+            Login
         </title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,18 +12,20 @@
     <body>
         <h1>KRAFTTO</h1>
         <div>
-            <h3> 크래프톤 정글 마니또 게임 </h3>
+            <h3>WEEK_{{ weeknumber }}  MISSION</h3>
+            <p>미션 완료</p>
             <div>
-                <h5 class=2 >기획의도</h5>
+                <p>축하합니다! 모든 미션을 완료했습니다.</p>
+                <p> 당신의 마니또는 {{ username }} 입니다.</p>
                 <ul>
-                    <li>정글러들끼리 빠르게 친해지기 위해</li>
-                    <li>마니또가 되어 이기적 이타주의를 실천해봅시다</li>
+                    <li>1주차 메시지 : {{ message1 }}</li>
+                    <li>2주차 메시지 : {{ message2 }}</li>
+                    <li>3주차 메시지 : {{ message3 }}</li>
+                    <li>4주차 메시지 : {{ message4 }}</li>
                 </ul>
-                <h5>마니또가 되어 도움을 주고, 당신의 마니또를 찾아보세요!</h5>
-                <button>Start!</button>
-                <p>Created by. Team3 마찬옥, 김진규, 김병현</p>
+                    
             </div>
         </div>
+
     </body>
 </html>
-

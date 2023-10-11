@@ -12,13 +12,14 @@
     <body>
         <h1>KRAFTTO</h1>
         <div>
-            <h3>로그인</h3>
-            <form method="post">
-                <input type="text" name="email" placeholder="E-mail" required>
-                <input type="password" name="password" placeholder="Password" required>
-                <button type="submit">Login</button>
-            </form>
+            <h3>WEEK_{{ weeknumber }}  MISSION</h3>
+            <p>미션 완료</p>
+            <div>
+                <p>수고했어요!</p>
+                <p> 당신의 마니또에 대한 힌트는 {{ hint_weeknumber }} 입니다.</p>
+                <button>돌아가기</button>
+            </div>
         </div>
-    <p>Don't have an account? <a href="{{ url_for('signup') }}">Sign up</a></p>
+
     </body>
 </html>

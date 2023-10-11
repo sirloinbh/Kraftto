@@ -18,7 +18,11 @@ def weekly_mission():
         return redirect(url_for("get_user_data"))
 
     # 주차별로 html 렌더링함.
+<<<<<<< HEAD
+    return render_template(f'mission.html', id=id )
+=======
     return render_template('mission.html')
+>>>>>>> c7a0a032b3de42eb6e0a9d31d71ef35eac860a17
 
 
 @app.route('/mission/complete', methods=['GET', 'POST'])
