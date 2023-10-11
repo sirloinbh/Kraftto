@@ -45,11 +45,18 @@ def signup():
         # Implement user registration logic here (create a new user).
         username = request.form.get('username')
         password = request.form.get('password')
+
+        print('hello')
+
         hashed_password = bcrypt.generate_password_hash(
             password).decode('utf-8')
         new_user = User(username=username, password=hashed_password)
         db.session.add(new_user)
-        db.session.commit(new_user)
+
+
+
+        db.session.commit()
+
         flash('Your account has been created!', 'success')
         return redirect(url_for('login'))
     return render_template('signup.html')
@@ -58,4 +65,7 @@ def signup():
 if __name__ == '__main__':
     with app.app_context() : 
         db.create_all()
-    app.run(debug=False)
+
+
+    app.run(debug=True)
+
