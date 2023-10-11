@@ -45,6 +45,7 @@ def signup():
         # Implement user registration logic here (create a new user).
         username = request.form.get('username')
         password = request.form.get('password')
+        print('hello')
         hashed_password = bcrypt.generate_password_hash(
             password).decode('utf-8')
         new_user = User(username=username, password=hashed_password)
