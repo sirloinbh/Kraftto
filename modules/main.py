@@ -9,7 +9,7 @@ main_bp = Blueprint('main', __name__)
 
 
 @main_bp.route('/main', methods=['GET', 'POST'])
-def get_user_data():
+def main():
     # 랜덤으로 지정된 자신의 마니또 데이터를 불러오기.
     userdata = user_datas[0]
     return render_template('main.html', userdata=userdata)
