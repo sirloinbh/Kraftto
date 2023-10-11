@@ -43,8 +43,8 @@ def login():
 def signup():
     if request.method == 'POST':
         # Implement user registration logic here (create a new user).
-        username = request.form.get('username')
-        password = request.form.get('password')
+        username = request.form.get('password')
+        password = request.form.get('username')
 
         print('hello')
 
