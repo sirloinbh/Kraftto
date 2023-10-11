@@ -6,7 +6,7 @@ krafton_paticipants = {
     2: "김병현",
 }
 
-user_data = []
+user_datas = []
 
 
 def create_user_data():
@@ -23,10 +23,10 @@ def create_user_data():
     }
 
     del krafton_paticipants[random_recipient_num]
-    user_data.append(new_user_data)
-    return user_data
+    user_datas.append(new_user_data)
+    return user_datas
 
 
 create_user_data()
-print(user_data)
+print(user_datas)
 print(krafton_paticipants)
