@@ -11,14 +11,22 @@ signup_bp = Blueprint('signup', __name__)
 def signup():
     if request.method == 'POST':
         username = request.form['username']
+        email = request.form['email']
         password = request.form['password']
+        OS = request.form['OS']
+        gender = request.form['gender']
+        junglenumber = request.form['junglenumber']
 
-        doc = {
+        new_user = {
             'username': username,
-            'password': password
+            'email': email,
+            'password': password,
+            'OS': OS,
+            'gender': gender,
+            'junglenumber': junglenumber,
         }
 
-        db.user.insert_one(doc)
+        db.user.insert_one(new_user)
 
         return redirect(url_for('login.login'))
     else:
