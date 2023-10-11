@@ -2,10 +2,17 @@ from flask import Flask, render_template, request, session, redirect, url_for, f
 from pymongo import MongoClient
 
 
+
 app = Flask(__name__)
 
 client = MongoClient('localhost', 27017)
 db = client.kraftto
+
+
+@app.route('/')
+def main():
+    return render_template('Kraftto.html')
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -14,7 +21,6 @@ def login():
         password = request.form['password']
 
         find_user = db.user.find_one({'username': username})
-
 
         try:
             if find_user['password'] == password:
@@ -27,6 +33,7 @@ def login():
             return '로그인 오류'
     else:
         return render_template('login.html')
+
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -44,6 +51,7 @@ def signup():
         return redirect(url_for('login'))
     else:
         return render_template('signup.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
