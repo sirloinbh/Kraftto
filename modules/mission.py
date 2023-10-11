@@ -14,7 +14,7 @@ def mission():
     weeknumber = request.args.get("weeknumber")
     print(weeknumber)
     if weeknumber == '4':
-        return render_template('final_complete.html')
+        return render_template('final_complete.html', weeknumber=weeknumber)
 
     random_mission = weekly_missions['mission1']
 
