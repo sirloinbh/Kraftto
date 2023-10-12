@@ -24,7 +24,7 @@
                     url: "/login",
                     data: { 'email': $('#email').val(), 'password': $('#password').val()},
                     success: function (response) {
-                        if (response['token'] == 'success') {
+                        if (response['result'] == 'success') {
                             $.cookie('mytoken', response['token'], { expires: 7, path:'/'});
 
                             alert('로그인 완료!')
