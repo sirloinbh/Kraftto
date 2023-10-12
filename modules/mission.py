@@ -20,8 +20,10 @@ def mission_func():
     weeknumber = request.args.get("weeknumber")
 
     if request.method == "POST":
-        message = request.form.get("message")
+        message = {f"message{weeknumber}": request.form.get("message")}
         print(message)
+        db.user.update_one({'username': '마찬옥'}, {
+            '$set': {f"message{weeknumber}": request.form.get("message")}})
 
         if weeknumber == '4':
             return redirect(url_for("mission_complete.mission_complete_fun"))
