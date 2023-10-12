@@ -15,15 +15,38 @@
     <body class="bg-gray-100 h-screen flex flex-col justify-center items-center">
 
         <h1 class="text-4xl font-bold mb-4">KRAFTTO</h1>
-        <div class="bg-white p-8 rounded-lg shadow-md w-1/2">
-            
+
+        <div class="bg-white p-8 rounded-lg shadow-md w-1/2 relative">
+
+            <!-- Username and Logout Button -->
+            <div class="absolute top-4 right-4 flex items-center">
+                <span class="text-xl mr-4">{{ username }}</span>
+                <a href="{{ url_for('logout') }}" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">로그아웃</a>
+            </div>
+
             {% if user == None %}
             <h3 class="text-2xl font-semibold mb-4">
                 당신은 아직 마니또가 없습니다. 룰렛을 돌려주세요.
             </h3>
             <div class="border rounded p-4 mt-4 flex justify-center items-center">
-                <a href="{{ url_for('main.roulette_func') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">룰렛 돌리기</a>
+                <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"onclick = "openSlotMachine()">룰렛 돌리기</button>
             </div>
+
+            <!-- Modal -->
+            <div id="slotMachineModal" class="hidden fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50">
+                <div class="bg-white p-8 rounded-lg">
+                    <h2 class="text-2xl mb-4">슬롯 머신을 돌려주세요!</h2>
+                    <div id="slotMachine" class="flex justify-center">
+                        <div class="slot">
+                            <!-- 미션들을 여기에 배치합니다. -->
+                            1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16
+                        </div>
+                    </div>
+                    <button id="spinButton" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">돌리기</button>
+                </div>
+            </div>
+            <!-- Trigger Modal -->
+            <button onclick="openSlotMachine()">슬롯 머신 돌리기</button>
             {% else %}
 
 
@@ -39,13 +62,13 @@
                     </div>
                     <!-- 퍼센트를 문자열로 표시 -->
                     <p class="text-center">
-                        {% if final_complete %}
+                        {% if week4_approved %}
                         100%
-                        {% elif third_hint %}
+                        {% elif week3_approved %}
                         75%
-                        {% elif second_hint %}
+                        {% elif week2_approved %}
                         50%
-                        {% elif first_hint %}
+                        {% elif week1_approved %}
                         25%
                         {% else %}
                         0%
@@ -101,8 +124,37 @@
                 <a class="block bg-gray-400 text-white px-4 py-2 rounded w-full text-center" href="#" onclick="return false;">4주차 미션</a>
                 {% endif %}
         
->>>>>>> cfb245547812d7be45df7ea0bb6978ec92b2a90e
             </div>
+
         </div>
+        <script>
+            let spinning = false;
+        
+            function openSlotMachine() {
+                document.getElementById('slotMachineModal').classList.remove('hidden');
+                startSpinning();
+            }
+        
+            function startSpinning() {
+                if (!spinning) {
+                    spinning = true;
+                    let slot = document.querySelector('.slot');
+                    let randomTop = Math.floor(Math.random() * 150); // 무작위 위치를 계산합니다.
+                    slot.style.top = `-${randomTop}px`;
+        
+                    document.getElementById('spinButton').innerText = "STOP";
+                } else {
+                    stopSpinning();
+                }
+            }
+        
+            function stopSpinning() {
+                spinning = false;
+                document.getElementById('spinButton').innerText = "돌리기";
+            }
+        
+            document.getElementById('spinButton').addEventListener('click', startSpinning);
+        </script>
     </body>
+
 </html>
