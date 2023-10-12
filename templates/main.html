@@ -33,23 +33,20 @@
             </div>
 
             <!-- Modal -->
-            <div id="slotMachineModal" class="hidden fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50">         
+            <div id="slotMachineModal" class="hidden fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50">
                 <div class="bg-white p-8 rounded-lg">
                     <h2 class="text-2xl mb-4">슬롯 머신을 돌려주세요!</h2>
-                    <div id="slotMachine" class="flex">
+                    <div id="slotMachine" class="flex justify-center">
                         <div class="slot">
-                            1
-                        </div>
-                        <div class="slot">
-                            2
-                        </div>
-                        <div class="slot">
-                            3
+                            <!-- 미션들을 여기에 배치합니다. -->
+                            1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16
                         </div>
                     </div>
                     <button id="spinButton" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">돌리기</button>
                 </div>
             </div>
+            <!-- Trigger Modal -->
+            <button onclick="openSlotMachine()">슬롯 머신 돌리기</button>
             {% else %}
 
 
@@ -132,34 +129,31 @@
         </div>
         <script>
             let spinning = false;
-    
+        
             function openSlotMachine() {
                 document.getElementById('slotMachineModal').classList.remove('hidden');
                 startSpinning();
             }
-            
+        
             function startSpinning() {
                 if (!spinning) {
                     spinning = true;
-                    let slots = document.querySelectorAll('.slot');
-                    slots.forEach(slot => {
-                        let randomTop = Math.floor(Math.random() * 150); // 무작위 위치를 계산합니다.
-                        slot.style.top = `-${randomTop}px`;
-                    });
-            
+                    let slot = document.querySelector('.slot');
+                    let randomTop = Math.floor(Math.random() * 150); // 무작위 위치를 계산합니다.
+                    slot.style.top = `-${randomTop}px`;
+        
                     document.getElementById('spinButton').innerText = "STOP";
                 } else {
                     stopSpinning();
                 }
             }
-            
+        
             function stopSpinning() {
                 spinning = false;
                 document.getElementById('spinButton').innerText = "돌리기";
             }
-            
+        
             document.getElementById('spinButton').addEventListener('click', startSpinning);
-            
         </script>
     </body>
 
