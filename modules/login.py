@@ -26,11 +26,12 @@ def login_func():
 
         if find_user:
             payload = {
-                'id': email,
+                'email': email,
                 'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=60 * 60 * 1)
             }
 
             token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
+
             return jsonify({'result': 'success', 'token': token})
         else:
             return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})

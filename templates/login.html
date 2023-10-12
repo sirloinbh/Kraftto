@@ -12,20 +12,19 @@
         <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     </head>
     <script>
-        {% if msg %}
-        alert("{{ msg }}")
-        {% endif %}
         function login() {
         $.ajax({
             type: "POST",
             url: "/api/login",
-            data: {id_give: $('#userid').val(), pw_give: $('#userpw').val()},
+            data: { 'email': $('#email').val(), 'password': $('#password').val()},
             success: function (response) {
+                alert(response)
                 if (response['result'] == 'success') {
+                    console.log(response)
                     $.cookie('mytoken', response['token']);
 
                     alert('로그인 완료!')
-                    window.location.href = '/index'
+                    window.location.href = '/main'
                 } else {
                     alert(response['msg'])
                 }
@@ -58,14 +57,6 @@
             </div>
             <p class="mt-4 text-gray-600 text-right">Don't have an account? <a href="{{ url_for('signup.signup_func') }}" class="text-blue-500">Sign up</a></p>
         </div>
-
-        {% if login_failed %}
-        <script>
-            alert("로그인에 실패하였습니다. 이메일 혹은 비밀번호를 확인해주세요.");
-        </script>
-        {% else %}
-        //메인 페이지로 넘어가기
-        {% endif %}
 
     </body>
 </html>

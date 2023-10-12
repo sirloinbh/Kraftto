@@ -1,5 +1,8 @@
-from flask import Flask, request, render_template, Blueprint
+import jwt
+from flask import Flask, request, render_template, Blueprint, redirect, url_for
 from pymongo import MongoClient
+
+from modules.login import SECRET_KEY
 from modules.userdatas import krafton_paticipants
 import random
 
@@ -15,26 +18,45 @@ main_bp = Blueprint('main', __name__)
 
 @main_bp.route('/main', methods=['GET', 'POST'])
 def main_func():
-    user = db.user.find_one({"username": "마찬옥"})
-    if user['is_manitto'] == False:
-        print("마니또가 아직 없습니다. 룰렛을 돌려주세요.")
-        user = None
-        return render_template('main.html', user=user, is_manitto=True)
+    token_receive = request.cookies.get('mytoken')
 
-    return render_template('main.html', user=user)
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        find_user = db.user.find_one({"userId": payload["id"]})
+
+        if not find_user['is_manitto']:
+            print("마니또가 아직 없습니다. 룰렛을 돌려주세요.")
+            return render_template('main.html', user=None, is_manitto=True)
+
+        return render_template('main.html', user=find_user)
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login.login_func", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("login.login_func", msg="로그인 정보가 존재하지 않습니다."))
+
 
 
 @main_bp.route('/main/roulette', methods=['GET', 'POST'])
 def roulette_func():
-    # 랜덤으로 도와줄 사람 배정
-    db.user.update_one({"username": "마찬옥"}, {"$set": {'is_manitto': True}})
-    db.user.update_one({"username": "마찬옥"}, {
-                       "$set": {'person_i_help': person_i_help[1]}})
-    print(person_i_help)
-    # db.user.update_one({"username": person_i_help[1]}, {"$set": {'person_i_got_help': True}})
+    token_receive = request.cookies.get('mytoken')
 
-    user = db.user.find_one({"username": "마찬옥"})
-    return render_template('main.html', user=user)
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        find_user = db.user.find_one({"userId": payload["id"]})
+
+        # 랜덤으로 도와줄 사람 배정
+        db.user.update_one({"username": "마찬옥"}, {"$set": {'is_manitto': True}})
+        db.user.update_one({"username": "마찬옥"}, {
+                           "$set": {'person_i_help': person_i_help[1]}})
+        print(person_i_help)
+        # db.user.update_one({"username": person_i_help[1]}, {"$set": {'person_i_got_help': True}})
+
+        user = db.user.find_one({"username": "마찬옥"})
+        return render_template('main.html', user=user)
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
 
 # 내가 도울 사람이 있는지 없는 지 확인 ( is_manitto )
