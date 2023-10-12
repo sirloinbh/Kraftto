@@ -33,9 +33,7 @@ def login_api():
             'email': email,
             'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=60 * 60 * 1)
         }
-        if find_user['email'] == 'admin':
-            return render_template('admin.html')
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
-        return jsonify({'result': 'success', 'token': token})
+        return jsonify({'result': 'success', 'token': token, 'email': find_user['email']})
     else:
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
