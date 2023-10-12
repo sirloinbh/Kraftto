@@ -19,7 +19,7 @@ def main_func():
     if user['is_manitto'] == False:
         print("마니또가 아직 없습니다. 룰렛을 돌려주세요.")
         user = None
-        return render_template('main.html', user=user)
+        return render_template('main.html', user=user, is_manitto=True)
 
     return render_template('main.html', user=user)
 
@@ -31,7 +31,7 @@ def roulette_func():
     db.user.update_one({"username": "마찬옥"}, {
                        "$set": {'person_i_help': person_i_help[1]}})
     print(person_i_help)
-    db.user.update_one({"username": person_i_help[1]}, {"$set": {'is_manitto': True}})
+    # db.user.update_one({"username": person_i_help[1]}, {"$set": {'person_i_got_help': True}})
 
     user = db.user.find_one({"username": "마찬옥"})
     return render_template('main.html', user=user)
