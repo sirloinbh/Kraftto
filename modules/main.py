@@ -37,14 +37,13 @@ def main_func():
             print("마니또가 아직 없습니다. 룰렛을 돌려주세요.")
             return render_template('main.html', user=user, participants=krafton_paticipants)
 
-        # if user['person_i_got_help'] == '':
-        #     users = list(db.user.find())
-        #     # for user in users:
-        #     #     print(user.get('person_i_help'))
-
-        if user.get('person_i_help') == user['username']:
-            db.user.update_one({"username": user['username']}, {
-                "$set": {'person_i_got_help': "마찬옥"}})
+        if user['person_i_got_help'] == "":
+            user_lists = list(db.user.find())
+            for users in user_lists:
+                print(users)
+                # if users['person_i_help'] == user['username']:
+                # db.user.update_one({"username": user['username']}, {
+                #     "$set": {'person_i_got_help': users['person_i_help']}})
 
         if user:
             week1_approved = bool(db.message.find_one(
@@ -74,7 +73,7 @@ def roulette_func():
         db.user.update_one({'username': user['username']}, {
                            '$set': {'is_manitto': True}})
         db.user.update_one({'username': user['username']}, {
-                           '$set': {'person_i_help': request.form.get('selectedperson')}})
+                           '$set': {'person_i_help': request.form.get('selectedperson').split('.')[1]}})
 
         return render_template('main.html', user=user)
 
