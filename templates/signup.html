@@ -17,45 +17,53 @@
 
         <div class="bg-white p-8 rounded-lg shadow-md w-1/2">
             <h3 class="text-2xl font-semibold mb-4">
-                SignUp
+                회원가입
             </h3>
             <div class="border rounded p-4 mt-4">   
                 <form method="post" class="space-y-4">
-                    <div class="flex items-center space-x-2">
-                        <label>이름 :</label>
-                        <input type="text" name="username" placeholder="Username" required class="w-3/4 p-2 border rounded">
+                    <div class="flex items-center space-x-4">
+                        <label for="username" class="w-1/5 text-right">이름 : </label>
+                        <input type="text" name="username" id="username" placeholder="Username을 입력하세요" required class="w-3/5 p-2 border rounded">
                     </div>
-                    <div class="flex items-center space-x-2">
-                        <label>이메일 :</label>
-                        <input type="text" name="email" placeholder="E-mail" required class="w-3/4 p-2 border rounded">
+                    <div class="flex items-center space-x-4">
+                        <label for="email" class="w-1/5 text-right">이메일 : </label>
+                        <input type="text" name="email" id="email" placeholder="E-mail을 입력하세요" required class="w-3/5 p-2 border rounded">
                     </div>
-                    <div class="flex items-center space-x-2">
-                        <label>비밀번호 :</label>
-                        <input type="password" name="password" placeholder="Password" required class="w-3/4 p-2 border rounded">
+                    <div class="flex items-center space-x-4">
+                        <label for="password" class="w-1/5 text-right">비밀번호 : </label>
+                        <input type="password" name="password" id="password" placeholder="Password를 입력하세요" required class="w-3/5 p-2 border rounded">
                     </div>
-                    <div class="flex items-center space-x-2">
-                        <label>비밀번호 확인 :</label>
-                        <input type="password" name="passwordConfirm" placeholder="Password Confirm" required class="w-3/4 p-2 border rounded">
+                    <div class="flex items-center space-x-4">
+                        <label for="passwordConfirm" class="w-1/5 text-right">비밀번호 확인 : </label>
+                        <input type="password" name="passwordConfirm" id="passwordConfirm" placeholder="Password Confirm을 입력하세요" required class="w-3/5 p-2 border rounded">
                     </div>
-                    <div class="flex items-center space-x-2">
-                        <label>힌트 1 :</label>
-                        <input type="text" name="OS" placeholder="What is your OS, Windows or Mac?" required class="w-3/4 p-2 border rounded">
+                </form>    
+            </div>
+            <!-- 힌트 부분 시작 -->
+            <h3 class="text-2xl font-semibold mt-4 mb-4">내 마니또에게 주는 힌트</h3>
+            <div class="border rounded p-4 mt-4 ">
+
+                <form method="post" class="space-y-4">
+                    <div class="flex items-center space-x-4">
+                        <label for="OS" class="w-1/5 text-right">힌트 1 : </label>
+                        <input type="text" name="OS" id="OS" placeholder="What is your OS, Windows or Mac?" required class="w-3/5 p-2 border rounded">
                     </div>
-                    <div class="flex items-center space-x-2">
-                        <label>힌트 2 :</label>
-                        <input type="text" name="gender" placeholder="What is your gender, male or female?" required class="w-3/4 p-2 border rounded">
+                    <div class="flex items-center space-x-4">
+                        <label for="gender" class="w-1/5 text-right">힌트 2 : </label>
+                        <input type="text" name="gender" id="gender" placeholder="What is your gender, male or female?" required class="w-3/5 p-2 border rounded">
                     </div>
-                    <div class="flex items-center space-x-2">
-                        <label>힌트 3 :</label>
-                        <input type="text" name="junglenumber" placeholder="What is your jungle number, even or odd?" required class="w-3/4 p-2 border rounded">
-                    </div>
-                    <div class="text-center mt-4">
-                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Sign Up</button>
+                    <div class="flex items-center space-x-4">
+                        <label for="junglenumber" class="w-1/5 text-right">힌트 3 : </label>
+                        <input type="text" name="junglenumber" id="junglenumber" placeholder="What is your jungle number, even or odd?" required class="w-3/5 p-2 border rounded">
                     </div>
                 </form>
+                <div class="text-center mt-4">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Sign Up</button>
+                </div>
             </div>
             <p class="mt-4 text-gray-600 text-right">Already have an account? <a href="{{ url_for('login.login') }}" class="text-blue-500">Login</a></p>
         </div>
+        
 
     </body>
 </html>
