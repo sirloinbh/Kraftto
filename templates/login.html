@@ -15,12 +15,11 @@
         function login() {
         $.ajax({
             type: "POST",
-            url: "/api/login",
+            url: "/login",
             data: { 'email': $('#email').val(), 'password': $('#password').val()},
             success: function (response) {
-                alert(response)
                 if (response['result'] == 'success') {
-                    console.log(response)
+                    console.log(response['token'])
                     $.cookie('mytoken', response['token']);
 
                     alert('로그인 완료!')
@@ -28,9 +27,12 @@
                 } else {
                     alert(response['msg'])
                 }
+            },
+            error: function () {
+                alert('error')
             }
         })
-        }
+    }
     </script>
     <body class="bg-gray-100 h-screen flex flex-col justify-center items-center">
 
@@ -51,7 +53,7 @@
                         <input type="password" name="password" id="password" placeholder="Password를 입력하세요" required class="w-3/5 p-2 border rounded">
                     </div>
                     <div class="text-center">
-                        <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Login</button>
+                        <button onclick="login()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Login</button>
                     </div>
                 </form>
             </div>
