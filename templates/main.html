@@ -10,6 +10,82 @@
         <meta name="keywords" content="Jinja2, 서버사이드 렌더링, 웹 개발, 템플릿 엔진">
         <!-- Tailwind CSS CDN -->
         <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+        <style>
+            .modal {
+                /* Removed the background color */
+                position: fixed;
+                top: 0; right: 0; bottom: 0; left: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 5px;
+                box-shadow: 1px 1px gray;
+            }
+            
+            .modal-content {
+                background: white;
+                padding: 40px; /* Increased the padding to make the modal larger */
+                border-radius: 5px;
+            }
+            
+            .hidden {
+                display: none;
+            }
+            
+            .slot-machine {
+                border: 1px solid lightgray;
+                height: 50px;
+                overflow: hidden;
+                border-radius: 3px;
+            }
+            
+            .slot-values {
+                display: flex;
+                flex-direction: column;
+                transform: translateY(0);
+            }
+            
+            .value {
+                height: 50px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            
+        </style>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                var isSpinning = false;
+                var spinInterval;
+            
+                $("#openModal").click(function() {
+                    $("#modal").removeClass("hidden");
+                });
+            
+                $("#closeModal").click(function() {
+                    $("#modal").addClass("hidden");
+                });
+            
+                $("#startSlot").click(function() {
+                    if (!isSpinning) {
+                        isSpinning = true;
+                        spinInterval = setInterval(function() {
+                            var y = parseInt($(".slot-values").css("transform").split(",")[5]);
+                            y -= 50;
+                            if (y <= -800) y = 0; // 16 values * 50px each = 800px
+                            $(".slot-values").css("transform", "translateY(" + y + "px)");
+                        }, 100);
+            
+                        setTimeout(function() {
+                            clearInterval(spinInterval);
+                            isSpinning = false;
+                        }, Math.random() * 5000 + 2000); // Random stop between 2 to 7 seconds
+                    }
+                });
+            });
+        </script>
+        
     </head>
 
     <body class="bg-gray-100 h-screen flex flex-col justify-center items-center">
@@ -29,24 +105,44 @@
                 당신은 아직 마니또가 없습니다. 룰렛을 돌려주세요.
             </h3>
             <div class="border rounded p-4 mt-4 flex justify-center items-center">
-                <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"onclick = "openSlotMachine()">룰렛 돌리기</button>
+                <button id="openModal" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 btn-open">룰렛 돌리기</button>
+
             </div>
 
-            <!-- Modal -->
-            <div id="slotMachineModal" class="hidden fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50">
-                <div class="bg-white p-8 rounded-lg">
-                    <h2 class="text-2xl mb-4">슬롯 머신을 돌려주세요!</h2>
-                    <div id="slotMachine" class="flex justify-center">
-                        <div class="slot">
-                            <!-- 미션들을 여기에 배치합니다. -->
-                            1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16
+            <div class="app">
+                <!-- 모달창 -->
+                <div id="modal" class="modal fixed inset-0 flex items-center justify-center p-4 hidden">
+                    <div class="modal-content bg-white p-8 rounded-lg shadow-md w-1/2 flex flex-col">
+                        <!-- 슬롯 머신 -->
+                        <div class="slot-machine">
+                            <div class="slot-window ">
+                                <div class="slot-values">
+                                    <div class="value">1</div>
+                                    <div class="value">2</div>
+                                    <div class="value">3</div>
+                                    <div class="value">4</div>
+                                    <div class="value">5</div>
+                                    <div class="value">6</div>
+                                    <div class="value">7</div>
+                                    <div class="value">8</div>
+                                    <div class="value">9</div>
+                                    <div class="value">10</div>
+                                    <div class="value">11</div>
+                                    <div class="value">12</div>
+                                    <div class="value">13</div>
+                                    <div class="value">14</div>
+                                    <div class="value">15</div>
+                                    <div class="value">16</div>
+            
+                                </div>
+                            </div>
                         </div>
+                        <!-- 시작 및 닫기 버튼 -->
+                        <button id="startSlot" class="btn-start mt-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mx-auto">Start</button>
+                        <button id="closeModal" class="btn-close mt-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mx-auto">Close</button>
                     </div>
-                    <button id="spinButton" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">돌리기</button>
                 </div>
             </div>
-            <!-- Trigger Modal -->
-            <button onclick="openSlotMachine()">슬롯 머신 돌리기</button>
             {% else %}
 
 
@@ -127,34 +223,7 @@
             </div>
 
         </div>
-        <script>
-            let spinning = false;
-        
-            function openSlotMachine() {
-                document.getElementById('slotMachineModal').classList.remove('hidden');
-                startSpinning();
-            }
-        
-            function startSpinning() {
-                if (!spinning) {
-                    spinning = true;
-                    let slot = document.querySelector('.slot');
-                    let randomTop = Math.floor(Math.random() * 150); // 무작위 위치를 계산합니다.
-                    slot.style.top = `-${randomTop}px`;
-        
-                    document.getElementById('spinButton').innerText = "STOP";
-                } else {
-                    stopSpinning();
-                }
-            }
-        
-            function stopSpinning() {
-                spinning = false;
-                document.getElementById('spinButton').innerText = "돌리기";
-            }
-        
-            document.getElementById('spinButton').addEventListener('click', startSpinning);
-        </script>
+
     </body>
 
 </html>
