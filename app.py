@@ -1,4 +1,3 @@
-import jwt
 from flask import Flask, render_template, request, session, redirect, url_for, flash, jsonify
 from pymongo import MongoClient
 from modules.login import login_bp, SECRET_KEY
@@ -34,18 +33,8 @@ app.register_blueprint(admin_bp)
 
 @app.route('/')
 def main():
-    token_receive = request.cookies.get('mytoken')
-    try:
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        user_info = db.user.find_one({"id": payload['id']})
-        return render_template('login.html', user_info=user_info)
-    except jwt.ExpiredSignatureError:
-        return redirect(url_for("login.login_func", msg="로그인 시간이 만료되었습니다."))
-    except jwt.exceptions.DecodeError:
-        return redirect(url_for("login.login_func", msg="로그인 정보가 존재하지 않습니다."))
-    except jwt.exceptions.DecodeError:
-        return redirect(url_for("index", msg="메인 페이지 입니다."))
-    return render_template('index.html')
+    return render_template('login.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
