@@ -1,6 +1,6 @@
-# from pymongo import MongoClient
-# client = MongoClient('localhost', 27017)
-# db = client.kraftto
+from pymongo import MongoClient
+client = MongoClient('localhost', 27017)
+db = client.kraftto
 
 weekly_missions = {
     "mission1": "손인사하기",
@@ -22,5 +22,5 @@ weekly_missions = {
 }
 
 
-# for mission in weekly_mission.items():
-#     db.mission.insert_one({'mission':mission[0], "description":mission[1]})
+# for mission in weekly_missions.items():
+#     db.mission.insert_one({'mission': mission[0], "description": mission[1]})

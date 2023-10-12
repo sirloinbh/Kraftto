@@ -6,8 +6,6 @@ from modules.main import main_bp
 from modules.mission_complete import mission_complete_bp
 from modules.mission import mission_bp
 
-from modules.ramdom_manito import krafton_paticipants, user_datas
-
 
 app = Flask(__name__)
 client = MongoClient('localhost', 27017)
