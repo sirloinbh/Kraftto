@@ -18,7 +18,6 @@
 
         <script>
             function login() {
-                alert('안녕');
                 $.ajax({
                     type: "POST",
                     url: "/login",
@@ -61,7 +60,7 @@
                         <input type="password" name="password" id="password" placeholder="Password를 입력하세요" required class="w-3/5 p-2 border rounded">
                     </div>
                     <div class="text-center">
-                        <button onclick="login()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Login</button>
+                        <button type="button" onclick="login()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Login</button>
                     </div>
                 </form>
             </div>
