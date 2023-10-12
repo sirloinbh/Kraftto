@@ -10,6 +10,7 @@
         <meta name="keywords" content="Jinja2, 서버사이드 렌더링, 웹 개발, 템플릿 엔진">
         <!-- Tailwind CSS CDN -->
         <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
         <style>
             .modal {
                 /* Removed the background color */
@@ -104,7 +105,7 @@
             <!-- Username and Logout Button -->
             <div class="absolute top-4 right-4 flex items-center">
                 <span class="text-xl mr-4">{{ user.username }}</span>
-                <a href="" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">로그아웃</a>
+                <button onclick="logout()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">로그아웃</button>
             </div>
 
             {% if user.person_i_help == None %}
@@ -215,7 +216,34 @@
             </div>
 
         </div>
-
+        <script>
+            let spinning = false;
+        
+            function openSlotMachine() {
+                document.getElementById('slotMachineModal').classList.remove('hidden');
+                startSpinning();
+            }
+        
+            function startSpinning() {
+                if (!spinning) {
+                    spinning = true;
+                    let slot = document.querySelector('.slot');
+                    let randomTop = Math.floor(Math.random() * 150); // 무작위 위치를 계산합니다.
+                    slot.style.top = `-${randomTop}px`;
+        
+                    document.getElementById('spinButton').innerText = "STOP";
+                } else {
+                    stopSpinning();
+                }
+            }
+        
+            function stopSpinning() {
+                spinning = false;
+                document.getElementById('spinButton').innerText = "돌리기";
+            }
+        
+            document.getElementById('spinButton').addEventListener('click', startSpinning);
+        </script>
     </body>
 
 </html>

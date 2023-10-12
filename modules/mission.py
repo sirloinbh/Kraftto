@@ -40,7 +40,7 @@ def mission_func():
         random_mission = random.choice(list(db.mission.find()))['description']
         print(random_mission)
 
-        return render_template('mission.html', weeknumber=weeknumber, random_mission=random_mission)
+        return render_template('mission.html', user=None, weeknumber=weeknumber, random_mission=random_mission)
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
