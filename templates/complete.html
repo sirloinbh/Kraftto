@@ -35,21 +35,21 @@
             <div >
                 <div class="border rounded p-4 mt-4">
                     <p>미션 완료!</p>
-                    <p> 당신의 마니또에 대한 힌트는 {{ hint_weeknumber }} 입니다.</p>
-                    <p>당신의 마니또가 보내는 응원 메시지 : 
+                    
                         
-
                         {% for message in messages %}
-
-                        {% if weeknumber == '1' %}
-                        {{ message.message1 }}
+                        {% if weeknumber == '1' and message.message1 %}
+                        <p>당신의 마니또에 대한 1주차 힌트 : 당신의 마니또는 {{ hints.OS }}💻을 사용합니다.🔥</p>
+                        <p>당신의 마니또가 보내는 사랑의 1주차 응원메시지 : 
+                        {{ message.message1 }}</p>
                         
-                        {% elif weeknumber == '2' %}
-                        {{ message.message2 }}
+                        {% elif weeknumber == '2' and message.message2 %}
+                        <p>당신의 마니또에 대한 2주차 힌트 : 당신의 마니또의 성별은 {{ hints.gender }}입니다.👍</p>
+                        <p>당신의 마니또가 보내는 2주차 응원 메시지 : {{ message.message2 }}</p>
 
-                        {% elif weeknumber == '3' %}
-                        {{ message.message3 }}
-
+                        {% elif weeknumber == '3' and message.message3 %}
+                        <p>당신의 마니또에 대한 3주차 힌트 : 당신의 마니또의 정글 번호는 {{ hints.junglenumber }}입니다.☕️</p>
+                        <p>당신의 마니또가 보내는 3주차 응원 메시지 : {{ message.message3 }}</p>
                         {% endif %}
                         {% endfor %}
                     </p>

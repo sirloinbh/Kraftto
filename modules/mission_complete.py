@@ -19,10 +19,10 @@ def mission_complete_fun():
     person_i_got_help = db.user.find_one({'username': userdata['username']})[
         'person_i_got_help']
     messages = list(db.message.find({'username': person_i_got_help}))
-    hint = db.user.find_one({'username': person_i_got_help})
-    print(hint["OS"])
+    hints = db.user.find_one({'username': person_i_got_help})
+    print(messages)
 
-    return render_template("complete.html", weeknumber=weeknumber, messages=messages)
+    return render_template("complete.html", weeknumber=weeknumber, messages=messages, hints=hints)
 
 
 @mission_complete_bp.route('/mission/final_complete', methods=['GET', 'POST'])
