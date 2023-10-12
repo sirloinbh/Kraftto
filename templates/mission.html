@@ -1,66 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>
-            Login
-        </title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="이 페이지는 Jinja2와 서버사이드 렌더링에 대한 정보를 제공합니다.">
-        <meta name="keywords" content="Jinja2, 서버사이드 렌더링, 웹 개발, 템플릿 엔진">
-        <!-- Tailwind CSS CDN -->
-        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    </head>
-    <body class="bg-gray-100 h-screen flex flex-col justify-center items-center">
 
-        <h1 class="text-4xl font-bold mb-4">KRAFTTO</h1>
+<head>
+    <title>
+        Login
+    </title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="이 페이지는 Jinja2와 서버사이드 렌더링에 대한 정보를 제공합니다.">
+    <meta name="keywords" content="Jinja2, 서버사이드 렌더링, 웹 개발, 템플릿 엔진">
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
 
-        <div class="bg-white p-8 rounded-lg shadow-md w-1/2">
-            <h3 class="text-2xl font-semibold mb-4">
-                WEEK_{{ weeknumber }}  MISSION
-            </h3>
-            <div class="border rounded p-4 mt-4">
-                <div>
-                    <p>16개의 미션 중 랜덤 1개가 배정됩니다!</p>
-                    <p> {{ random_mission }} </p>
-                    <p>미션을 완수한 인증 사진을 업로드하고, 응원의 메시지와 함께 미션 인증 버튼을 눌러주세요</p>
-                </div>
-                <div class="text-center mt-4">
-                    <form method="post" class="flex justify-center items-center space-x-4">
-                        <input type="text" name="message" placeholder="응원의 메시지를 입력해주세요" required class="w-1/2 p-2 border rounded">
-                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">미션인증</button>
-                        
-                        <!-- 모달창 구조 -->
-                        <div class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center hidden" id="myModal">
-                            <div class="bg-white p-6 rounded-lg w-3/4 md:w-1/2 lg:w-1/3">
-                                <p class="mb-4">인증샷 등록이 완료되었습니다.</p>
-                                <p class="mb-4">관리자의 승인을 기다리세요.</p>
-                                <div class = "text-center">
-                                    <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" onclick="closeModal()">메인페이지로</button>
-                                </div>
-                            </div>
-                        </div>
-                
-                    </form>
-                </div>
-            </div>
+<body class="bg-gray-100 h-screen flex flex-col justify-center items-center">
+
+    <h1 class="text-4xl font-bold mb-4">KRAFTTO</h1>
+
+    <div class="bg-white p-8 rounded-lg shadow-md w-1/2 relative">
+
+        <!-- Username and Logout Button -->
+        <div class="absolute top-4 right-4 flex items-center">
+            <span class="text-xl mr-4">{{ username }}</span>
+            <a href="{{ url_for('logout') }}" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">로그아웃</a>
         </div>
 
-        
-        
-        <script>
-            function showModal() {
-                document.getElementById('myModal').classList.remove('hidden');
-            }
-    
-            function closeModal() {
-                document.getElementById('myModal').classList.add('hidden');
-            }
-    
-            document.querySelector('button[type="submit"]').addEventListener('click', function(e) {
-                e.preventDefault();
-                showModal();
-            });
-        </script>
-    </body>
+        <h3 class="text-2xl font-semibold mb-4">
+            WEEK_{{ weeknumber }} MISSION
+        </h3>
+        <div class="border rounded p-4 mt-4">
+            <div>
+                <p>16개의 미션 중 랜덤 1개가 배정됩니다!</p>
+                <p> {{ random_mission }} </p>
+                <p>미션을 완수한 인증 사진을 업로드하고, 응원의 메시지와 함께 미션 인증 버튼을 눌러주세요</p>
+            </div>
+            <div class="text-center mt-4">
+                <!-- <form method="post" enctype="multipart/form-data" class = "my-4">
+                    <p>이미지 파일을 
+                    <input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)" class="hidden">
+                    <label for="chooseFile" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 cursor-pointer">파일 선택</label>
+                </form> -->
+                <form method="post" class="flex justify-center items-center space-x-4">
+                    <input type="text" name="message" placeholder="응원의 메시지를 입력해주세요" required class="w-1/2 p-2 border rounded">
+                    <button type="button" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" onclick="openModal()">미션인증</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- 모달 창 -->
+    <div id="myModal" class="fixed inset-0 flex items-center justify-center p-4 hidden">
+        <div class="bg-white p-8 rounded-lg shadow-md w-1/2 flex flex-col">
+            <h3 class="text-2xl font-semibold mb-4">인증 대기</h3>
+                <div class="border rounded p-4 mt-4 flex-grow">
+                    <p class="mb-4">인증 사진과 응원 메시지 등록이 완료되었습니다.</p>
+                    <p class="mb-4">관리자의 승인을 기다리세요.</p>
+                    <div class="text-center">
+                        <button onclick="closeModal()" class="mt-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mx-auto">Close</button>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById('myModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('myModal').style.display = 'none';
+        }
+
+        function loadFile(input) {
+            var file = input.files[0]; //선택된 파일 가져오기
+
+            //미리 만들어 놓은 div에 text(파일 이름) 추가
+            var name = document.getElementById('fileName');
+            name.textContent = file.name;
+
+            //새로운 이미지 div 추가
+            var newImage = document.createElement("img");
+            newImage.setAttribute("class", 'img');
+
+            //이미지 source 가져오기
+            newImage.src = URL.createObjectURL(file);
+
+            newImage.style.width = "70%";
+            newImage.style.height = "70%";
+            newImage.style.visibility = "hidden"; //버튼을 누르기 전까지는 이미지를 숨긴다
+            newImage.style.objectFit = "contain";
+
+            //이미지를 image-show div에 추가
+            var container = document.getElementById('image-show');
+            container.appendChild(newImage);
+        };
+    </script>
+</body>
+
 </html>
