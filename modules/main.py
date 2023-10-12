@@ -15,11 +15,21 @@ main_bp = Blueprint('main', __name__)
 
 @main_bp.route('/main', methods=['GET', 'POST'])
 def main_func():
-    user = db.user.find_one({"username": "마찬옥"})
+    user = db.user.find_one({"username": "강철구"})
+
     if user['is_manitto'] == False:
         print("마니또가 아직 없습니다. 룰렛을 돌려주세요.")
         user = None
-        return render_template('main.html', user=user, is_manitto=True)
+        return render_template('main.html', user=user)
+
+    if user['person_i_got_help'] == '':
+        users = list(db.user.find())
+        for user in users:
+            print(user.get('person_i_help'))
+
+            if user.get('person_i_help') == '강철구':
+                db.user.update_one({"username": "강철구"}, {
+                                   "$set": {'person_i_got_help': "마찬옥"}})
 
     return render_template('main.html', user=user)
 
@@ -27,13 +37,13 @@ def main_func():
 @main_bp.route('/main/roulette', methods=['GET', 'POST'])
 def roulette_func():
     # 랜덤으로 도와줄 사람 배정
-    db.user.update_one({"username": "마찬옥"}, {"$set": {'is_manitto': True}})
-    db.user.update_one({"username": "마찬옥"}, {
+    db.user.update_one({"username": "강철구"}, {"$set": {'is_manitto': True}})
+    db.user.update_one({"username": "강철구"}, {
                        "$set": {'person_i_help': person_i_help[1]}})
     print(person_i_help)
     # db.user.update_one({"username": person_i_help[1]}, {"$set": {'person_i_got_help': True}})
 
-    user = db.user.find_one({"username": "마찬옥"})
+    user = db.user.find_one({"username": "강철구"})
     return render_template('main.html', user=user)
 
 

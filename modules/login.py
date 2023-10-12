@@ -1,5 +1,11 @@
-from flask import Flask, request, render_template, Blueprint, redirect, url_for
+import hashlib
+import datetime
+
+import jwt
+from flask import Flask, request, render_template, Blueprint, redirect, url_for, jsonify
 from pymongo import MongoClient
+
+SECRET_KEY = 'secrete key'
 
 client = MongoClient('localhost', 27017)
 db = client.kraftto
@@ -13,15 +19,20 @@ def login_func():
         email = request.form['email']
         password = request.form['password']
 
-        find_user = db.user.find_one({'email': email})
+        hashed_pw = hashlib.sha256(password.encode('utf-8')).hexdigest()
 
-        if find_user['password'] == password:
-            if email == 'admin':
-                return redirect(url_for("admin.admin_func"))
-                print('성공')
-            else:
-                return redirect(url_for("main.main_func"))
+        find_user = db.user.find_one({'email': email, 'password': hashed_pw})
+        print(find_user)
+
+        if find_user:
+            payload = {
+                'id': email,
+                'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=60 * 60 * 1)
+            }
+
+            token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
+            return jsonify({'result': 'success', 'token': token})
         else:
-            return '아이디 또는 비밀번호가 틀립니다.'
+            return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
 
     return render_template('login.html')
