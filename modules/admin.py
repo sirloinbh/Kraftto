@@ -15,7 +15,6 @@ admin_bp = Blueprint('admin', __name__)
 @admin_bp.route('/admin', methods=['GET', 'POST'])
 def admin_func():
     token_receive = request.cookies.get('mytoken')
-    print("token_receive: ", token_receive)
 
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
