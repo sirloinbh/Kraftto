@@ -10,11 +10,6 @@
         <meta name="keywords" content="Jinja2, 서버사이드 렌더링, 웹 개발, 템플릿 엔진">
         <!-- Tailwind CSS CDN -->
         <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-        
-        <!-- jQuery 를 포함합니다. -->
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-
     </head>
 
     <body class="bg-gray-100 h-screen flex flex-col justify-center items-center">
@@ -34,24 +29,44 @@
                 당신은 아직 마니또가 없습니다. 룰렛을 돌려주세요.
             </h3>
             <div class="border rounded p-4 mt-4 flex justify-center items-center">
-                <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"onclick = "openSlotMachine()">룰렛 돌리기</button>
+                <button id="openModal" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 btn-open">룰렛 돌리기</button>
+
             </div>
 
-            <!-- Modal -->
-            <div id="slotMachineModal" class="hidden fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50">
-                <div class="bg-white p-8 rounded-lg">
-                    <h2 class="text-2xl mb-4">슬롯 머신을 돌려주세요!</h2>
-                    <div id="slotMachine" class="flex justify-center">
-                        <div class="slot">
-                            <!-- 미션들을 여기에 배치합니다. -->
-                            1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16
+            <div class="app">
+                <!-- 모달창 -->
+                <div id="modal" class="modal fixed inset-0 flex items-center justify-center p-4 hidden">
+                    <div class="modal-content bg-white p-8 rounded-lg shadow-md w-1/2 flex flex-col">
+                        <!-- 슬롯 머신 -->
+                        <div class="slot-machine">
+                            <div class="slot-window ">
+                                <div class="slot-values">
+                                    <div class="value">1</div>
+                                    <div class="value">2</div>
+                                    <div class="value">3</div>
+                                    <div class="value">4</div>
+                                    <div class="value">5</div>
+                                    <div class="value">6</div>
+                                    <div class="value">7</div>
+                                    <div class="value">8</div>
+                                    <div class="value">9</div>
+                                    <div class="value">10</div>
+                                    <div class="value">11</div>
+                                    <div class="value">12</div>
+                                    <div class="value">13</div>
+                                    <div class="value">14</div>
+                                    <div class="value">15</div>
+                                    <div class="value">16</div>
+            
+                                </div>
+                            </div>
                         </div>
+                        <!-- 시작 및 닫기 버튼 -->
+                        <button id="startSlot" class="btn-start mt-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mx-auto">Start</button>
+                        <button id="closeModal" class="btn-close mt-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mx-auto">Close</button>
                     </div>
-                    <button id="spinButton" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">돌리기</button>
                 </div>
             </div>
-            <!-- Trigger Modal -->
-            <button onclick="openSlotMachine()">슬롯 머신 돌리기</button>
             {% else %}
 
 
@@ -157,10 +172,6 @@
                 spinning = false;
                 document.getElementById('spinButton').innerText = "돌리기";
             }
-
-<!--            function logout() {-->
-<!--                $.removeCookie('mytoken', { path: '/login'});-->
-<!--            }-->
         
             document.getElementById('spinButton').addEventListener('click', startSpinning);
         </script>
