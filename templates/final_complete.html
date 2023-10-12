@@ -15,7 +15,14 @@
 
         <h1 class="text-4xl font-bold mb-4">KRAFTTO</h1>
 
-        <div class="bg-white p-8 rounded-lg shadow-md w-1/2">
+        <div class="bg-white p-8 rounded-lg shadow-md w-1/2 relative">
+
+            <!-- Username and Logout Button -->
+            <div class="absolute top-4 right-4 flex items-center">
+                <span class="text-xl mr-4">{{ username }}</span>
+                <a href="{{ url_for('logout') }}" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">로그아웃</a>
+            </div>
+
             <h3 class="text-2xl font-semibold mb-4">
                 축하합니다! 모든 미션을 완료했습니다.
             </h3>
