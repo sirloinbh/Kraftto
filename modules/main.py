@@ -40,10 +40,9 @@ def main_func():
         if user['person_i_got_help'] == "":
             user_lists = list(db.user.find())
             for users in user_lists:
-                print(users)
-                # if users['person_i_help'] == user['username']:
-                # db.user.update_one({"username": user['username']}, {
-                #     "$set": {'person_i_got_help': users['person_i_help']}})
+                if users['person_i_help'] == user['username']:
+                    db.user.update_one({"username": user['username']}, {
+                        "$set": {'person_i_got_help': users['username']}})
 
         if user:
             week1_approved = bool(db.message.find_one(

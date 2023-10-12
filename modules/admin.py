@@ -43,9 +43,13 @@ def admin_approve():
 
         # Use the correct query condition to find the document by its ObjectId
         db.message.update_one({"_id": obj_id}, {'$set': {'is_approved': True}})
+        print(db.message.find_one({"_id": obj_id})['username'])
+
+        db.user.update_one(
+            {"username": db.message.find_one({"_id": obj_id})['username']}, {'$set': {'current_mission': ''}})
 
         not_approved_message = list(db.message.find({'is_approved': False}))
-        print(not_approved_message)
+
         return render_template('admin.html', user=user, messages=not_approved_message)
 
     except jwt.ExpiredSignatureError:
