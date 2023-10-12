@@ -25,10 +25,11 @@ def signup_api():
     check_email = True
     check_password = True
     check_password_confirm = True
+    check_user_duplication = True
 
     find_user = db.user.find_one({"email": email})
     if find_user:
-        pass
+        check_user_duplication = False
 
     if not re.match(email_pattern, email):
         check_email = False
@@ -39,9 +40,9 @@ def signup_api():
     if password != passwordConfirm:
         check_password_confirm = False
 
-    if not check_password or not check_email or not check_password_confirm:
+    if not check_password or not check_email or not check_password_confirm or check_user_duplication:
         return render_template('signup.html', check_password=check_password, check_email=check_email,
-                               check_password_confirm=check_password_confirm)
+                               check_password_confirm=check_password_confirm, check_user_duplication=check_user_duplication)
 
     OS = request.form['OS']
     gender = request.form['gender']
