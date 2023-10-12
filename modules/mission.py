@@ -22,7 +22,7 @@ def mission_func():
         message = request.form.get("message")
         print(message)
         # POST = Message -> DB 전달
-        return redirect(url_for("main.main"))
+        return redirect(url_for("main.main_func"))
 
     return render_template('mission.html', weeknumber=weeknumber, random_mission=random_mission)
 
