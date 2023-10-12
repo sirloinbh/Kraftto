@@ -23,7 +23,7 @@ def signup_func():
         new_user = {
             'username': username,
             'email': email,
-            'password': password,
+            'password': hashed_pw,
             'OS': OS,
             'gender': gender,
             'junglenumber': junglenumber,
