@@ -1,4 +1,5 @@
 import hashlib
+import re
 
 from flask import Flask, request, render_template, Blueprint, redirect, url_for
 from pymongo import MongoClient
@@ -17,7 +18,23 @@ def signup_func():
 def signup_api():
     username = request.form['username']
     email = request.form['email']
+    email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+    password_pattern = r'^(?=.*[A-Za-z0-9])(?=.*[\W_]).{8,}$'
+    check_email = True
+    check_password = True
+    if not re.match(email_pattern, email):
+        check_email = False
     password = request.form['password']
+    if not re.match(password_pattern, email):
+        check_password = False
+
+    if not check_password and not check_email:
+        return render_template('signup.html', check_password=check_password, check_email=check_email)
+    elif not check_password:
+        return render_template('signup.html', check_password=check_password)
+    elif not check_email:
+        return render_template('signup.html', check_email=check_email)
+
     OS = request.form['OS']
     gender = request.form['gender']
     junglenumber = request.form['junglenumber']
