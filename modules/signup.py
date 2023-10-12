@@ -40,7 +40,7 @@ def signup_api():
     if password != passwordConfirm:
         check_password_confirm = False
 
-    if not check_password or not check_email or not check_password_confirm or check_user_duplication:
+    if not check_password or not check_email or not check_password_confirm or not check_user_duplication:
         return render_template('signup.html', check_password=check_password, check_email=check_email,
                                check_password_confirm=check_password_confirm, check_user_duplication=check_user_duplication)
 
