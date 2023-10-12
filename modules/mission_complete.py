@@ -8,19 +8,30 @@ db = client.kraftto
 
 mission_complete_bp = Blueprint('mission_complete', __name__)
 
+userdata = {
+    "username": "강철구"
+}
+
 
 @mission_complete_bp.route('/mission/complete', methods=['GET', 'POST'])
 def mission_complete_fun():
-    token_receive = request.cookies.get('mytoken')
+    weeknumber = request.args.get('weeknumber')
+    person_i_got_help = db.user.find_one({'username': userdata['username']})[
+        'person_i_got_help']
+    messages = list(db.message.find({'username': person_i_got_help}))
+    hint = db.user.find_one({'username': person_i_got_help})
+    print(hint["OS"])
 
-    try:
-        all_messages = list(db.user.find({'username': "마찬옥"}, {'message1': True, 'message2': True, 'message3': True, 'message4': True}))[0]
-        person_i_got_help = db.user.find_one({'username': "강철구"})
+    return render_template("complete.html", weeknumber=weeknumber, messages=messages)
 
-        print(all_messages, person_i_got_help)
 
-        return render_template('final_complete.html', message=all_messages, person_i_got_help=person_i_got_help)
-    except jwt.ExpiredSignatureError:
-        return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
-    except jwt.exceptions.DecodeError:
-        return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
+@mission_complete_bp.route('/mission/final_complete', methods=['GET', 'POST'])
+def mission_final_complete_fun():
+    weeknumber = request.args.get('weeknumber')
+    user = db.user.find_one({'username': userdata['username']})
+    person_i_got_help = db.user.find_one({'username': userdata['username']})[
+        'person_i_got_help']
+
+    messages = list(db.message.find({'username': person_i_got_help}))
+    print(messages)
+    return render_template("final_complete.html", weeknumber=weeknumber, messages=messages, person_i_got_help=person_i_got_help, user=user)
