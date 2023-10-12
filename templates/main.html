@@ -39,13 +39,13 @@
                     </div>
                     <!-- 퍼센트를 문자열로 표시 -->
                     <p class="text-center">
-                        {% if final_complete %}
+                        {% if week4_approved %}
                         100%
-                        {% elif third_hint %}
+                        {% elif week3_approved %}
                         75%
-                        {% elif second_hint %}
+                        {% elif week2_approved %}
                         50%
-                        {% elif first_hint %}
+                        {% elif week1_approved %}
                         25%
                         {% else %}
                         0%
@@ -100,8 +100,6 @@
                 {% else %}
                 <a class="block bg-gray-400 text-white px-4 py-2 rounded w-full text-center" href="#" onclick="return false;">4주차 미션</a>
                 {% endif %}
-        
->>>>>>> cfb245547812d7be45df7ea0bb6978ec92b2a90e
             </div>
         </div>
     </body>

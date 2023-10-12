@@ -18,12 +18,18 @@ random_int = random.randint(1, 16)
 @mission_bp.route('/mission', methods=['GET', 'POST'])
 def mission_func():
     weeknumber = request.args.get("weeknumber")
+    userdata = {
+        'username': "김철수"
+    }
 
     if request.method == "POST":
-        message = {f"message{weeknumber}": request.form.get("message")}
-        print(message)
-        db.user.update_one({'username': '마찬옥'}, {
-            '$set': {f"message{weeknumber}": request.form.get("message")}})
+        message = {
+            'username': userdata['username'],
+            f"message{weeknumber}": request.form.get("message"),
+            "is_approved": False,
+        }
+        db.message.insert_one(message)
+        print("생성")
 
         if weeknumber == '4':
             return redirect(url_for("mission_complete.mission_complete_fun"))
