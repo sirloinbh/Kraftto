@@ -1,3 +1,4 @@
+import hashlib
 
 from flask import Flask, request, render_template, Blueprint, redirect, url_for
 from pymongo import MongoClient
@@ -16,6 +17,8 @@ def signup_func():
         OS = request.form['OS']
         gender = request.form['gender']
         junglenumber = request.form['junglenumber']
+
+        hashed_pw = hashlib.sha256(password.encode('utf-8')).hexdigest()
 
         new_user = {
             'username': username,
