@@ -27,15 +27,15 @@ def main_func():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user = db.user.find_one({"email": payload["email"]})
-        
+
         week1_approved = False
         week2_approved = False
         week3_approved = False
         week4_approved = False
 
-        if not user['is_manitto']:
+        if user['is_manitto'] == False:
             print("마니또가 아직 없습니다. 룰렛을 돌려주세요.")
-            return render_template('main.html', user=user, is_manitto=True)
+            return render_template('main.html', user="", is_manitto=True)
 
         if user['person_i_got_help'] == '':
             users = list(db.user.find())
@@ -44,17 +44,17 @@ def main_func():
 
         if user.get('person_i_help') == userdata['username']:
             db.user.update_one({"username": userdata['username']}, {
-                                   "$set": {'person_i_got_help': "마찬옥"}})
+                "$set": {'person_i_got_help': "마찬옥"}})
 
         if user:
             week1_approved = bool(db.message.find_one(
-            {"username": userdata['username'], 'message1': {'$exists': True}, 'is_approved': True}))
+                {"username": userdata['username'], 'message1': {'$exists': True}, 'is_approved': True}))
             week2_approved = bool(db.message.find_one(
-            {"username": userdata['username'], 'message2': {'$exists': True}, 'is_approved': True}))
+                {"username": userdata['username'], 'message2': {'$exists': True}, 'is_approved': True}))
             week3_approved = bool(db.message.find_one(
-            {"username": userdata['username'], 'message3': {'$exists': True}, 'is_approved': True}))
+                {"username": userdata['username'], 'message3': {'$exists': True}, 'is_approved': True}))
             week4_approved = bool(db.message.find_one(
-            {"username": userdata['username'], 'message4': {'$exists': True}, 'is_approved': True}))
+                {"username": userdata['username'], 'message4': {'$exists': True}, 'is_approved': True}))
 
         return render_template('main.html', user=user, week1_approved=week1_approved, week2_approved=week2_approved, week3_approved=week3_approved, week4_approved=week4_approved)
 
@@ -62,8 +62,6 @@ def main_func():
         return redirect(url_for("login.login_func", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login.login_func", msg="로그인 정보가 존재하지 않습니다."))
-
-    
 
 
 @main_bp.route('/main/roulette', methods=['GET', 'POST'])
