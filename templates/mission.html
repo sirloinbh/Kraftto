@@ -77,11 +77,13 @@
             WEEK_{{ weeknumber }} MISSION
         </h3>
         <div class="border rounded p-4 mt-4">
+
+            
             <div>
                 <p>16개의 미션 중 랜덤 1개가 배정됩니다!</p>
+                {% if user.current_mission == "" %}
                 <div class="border rounded p-4 mt-4 flex justify-center items-center">
                     <button id="openModal" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 btn-open">룰렛 돌리기</button>
-    
                 </div>
                 <div class="app">
                     <!-- 모달창 -->
@@ -104,6 +106,12 @@
                         </div>
                     </div>
                 </div>
+                {% else %}
+                <div class="border rounded p-4 mt-4 flex justify-center items-center">
+                    <p> {{ user.current_mission }}</p>
+                </div>
+                {% endif %}
+                
                 <p>미션을 완수한 인증 사진을 업로드하고, 응원의 메시지와 함께 미션 인증 버튼을 눌러주세요</p>
             </div>
             <div class="text-center mt-4">
@@ -206,8 +214,22 @@
                         var y = Math.abs(parseInt($(".slot-values").css("transform").split(",")[5]));
                         var index = (y / 50) % 16;
                         selectedmission = $(".value").eq(index).text();
-                        console.log("selectedperson :", selectedmission);
-
+                        console.log("selectedmission :", selectedmission);
+                        
+                        $.ajax({
+                            type: 'POST',
+                            url: '/mission/rullet',
+                            data: { selectedmission: selectedmission },
+                            success: function(response) {
+                                console.log("성공");
+                                // Redirect to the /mission route after a successful POST request
+                                window.location.href = '/main'
+                            },
+                            error: function(err) {
+                                // Handle any errors
+                                console.error(err);
+                            }
+                        });
                     }, Math.random() * 5000 + 2000);
                 }
             });
