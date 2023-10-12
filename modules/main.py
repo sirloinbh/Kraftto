@@ -31,7 +31,7 @@ def roulette_func():
     db.user.update_one({"username": "마찬옥"}, {
                        "$set": {'person_i_help': person_i_help[1]}})
     print(person_i_help)
-    db.user.update_one({"username": person_i_help[1]}, {"$set": {'is_manitto': True}})
+    # db.user.update_one({"username": person_i_help[1]}, {"$set": {'person_i_got_help': True}})
 
     user = db.user.find_one({"username": "마찬옥"})
     return render_template('main.html', user=user)
