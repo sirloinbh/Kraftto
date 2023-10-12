@@ -22,10 +22,16 @@ def signup_api():
     password_pattern = r'^(?=.*[A-Za-z0-9])(?=.*[\W_]).{8,}$'
     check_email = True
     check_password = True
+
+    if not username or not email:
+        check_email = False
+        check_password = False
+        return render_template('signup.html', check_password=check_password, check_email=check_email)
+
     if not re.match(email_pattern, email):
         check_email = False
     password = request.form['password']
-    if not re.match(password_pattern, email):
+    if not re.match(password_pattern, password):
         check_password = False
 
     if not check_password and not check_email:
