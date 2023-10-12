@@ -45,25 +45,39 @@
                 <h3 class="text-2xl font-semibold mb-4">
                     회원가입
                 </h3>
-                <div class="border rounded p-4 mt-4">   
-                
+                <div class="border rounded p-4 mt-4">
+
                     <div class="flex items-center space-x-4 space-y-4">
                         <label for="username" class="w-1/5 text-right">이름 : </label>
                         <input type="text" name="username" id="username" placeholder="Username을 입력하세요" required class="w-3/5 p-2 border rounded">
                     </div>
                     <div class="flex items-center space-x-4 space-y-4">
                         <label for="email" class="w-1/5 text-right">이메일 : </label>
-                        <input type="text" name="email" id="email" placeholder="E-mail을 입력하세요" required class="w-3/5 p-2 border rounded">
+                        <div class="w-3/5">
+                            <input type="text" name="email" id="email" placeholder="E-mail을 입력하세요" required class="w-full p-2 border rounded">
+                            {% if check_email == False %}
+                                <p class="text-red-500 text-xs mt-1">이메일 형식을 지켜주세요.</p>
+                            {% endif %}
+                        </div>
                     </div>
                     <div class="flex items-center space-x-4 space-y-4">
                         <label for="password" class="w-1/5 text-right">비밀번호 : </label>
-                        <input type="password" name="password" id="password" placeholder="Password를 입력하세요" required class="w-3/5 p-2 border rounded">
+                        <div class="w-3/5">
+                            <input type="password" name="password" id="password" placeholder="Password를 입력하세요" required class="w-full p-2 border rounded">
+                            {% if check_password == False %}
+                                <p class="text-red-500 text-xs mt-1">비밀번호는 최소 8자 이상, 특수문자 1개 이상, 영문 대소문자 또는 숫자 1개 이상 입력해주세요.</p>
+                            {% endif %}
+                        </div>
                     </div>
                     <div class="flex items-center space-x-4 space-y-4">
                         <label for="passwordConfirm" class="w-1/5 text-right">비밀번호 확인 : </label>
-                        <input type="password" name="passwordConfirm" id="passwordConfirm" placeholder="Password Confirm을 입력하세요" required class="w-3/5 p-2 border rounded">
+                        <div class="w-3/5">
+                            <input type="password" name="passwordConfirm" id="passwordConfirm" placeholder="Password Confirm을 입력하세요" required class="w-full p-2 border rounded">
+                            {% if check_password_confirm == False %}
+                                <p class="text-red-500 text-xs mt-1">비밀번호와 일치하지 않습니다.</p>
+                            {% endif %}
+                        </div>
                     </div>
-
                 </div>
                 <!-- 힌트 부분 시작 -->
                 <h3 class="text-2xl font-semibold mt-4 mb-4">내 마니또에게 주는 힌트</h3>
@@ -87,8 +101,14 @@
                     </div>
                 </div>
             </form>
-            <p class="mt-4 text-gray-600 text-right">Already have an account? <a href="{{ url_for('login.login_func') }}" class="text-blue-500">Login</a></p>
 
+            <div class="flex justify-center">
+                {% if check_password == False or check_email == False or check_password_confirm == False %}
+                    <p class="mt-4 text-gray-600 text-right">Already have an account? <a href="{{ url_for('signup.signup_func') }}" class="text-blue-500">Login</a></p>
+                {% else %}
+                    <p class="mt-4 text-gray-600 text-right">Already have an account? <a href="{{ url_for('login.login_func') }}" class="text-blue-500">Login</a></p>
+                {% endif %}
+            </div>
         </div>
     </body>
 </html>
