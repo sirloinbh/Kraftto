@@ -9,7 +9,7 @@ db = client.kraftto
 mission_complete_bp = Blueprint('mission_complete', __name__)
 
 userdata = {
-    "username": "강철구"
+    "username": "마찬옥"
 }
 
 
@@ -18,8 +18,7 @@ def mission_complete_fun():
     weeknumber = request.args.get('weeknumber')
     person_i_got_help = db.user.find_one({'username': userdata['username']})[
         'person_i_got_help']
-
-    messages = list(db.message.find({'username': userdata['username']}))
+    messages = list(db.message.find({'username': person_i_got_help}))
     print(person_i_got_help)
     print(messages)
     return render_template("complete.html", weeknumber=weeknumber, messages=messages)
@@ -28,11 +27,10 @@ def mission_complete_fun():
 @mission_complete_bp.route('/mission/final_complete', methods=['GET', 'POST'])
 def mission_final_complete_fun():
     weeknumber = request.args.get('weeknumber')
+    user = db.user.find_one({'username': userdata['username']})
     person_i_got_help = db.user.find_one({'username': userdata['username']})[
         'person_i_got_help']
 
-    messages = list(db.message.find({'username': userdata['username']}))
-    print(person_i_got_help)
+    messages = list(db.message.find({'username': person_i_got_help}))
     print(messages)
-
-    return render_template("final_complete.html", weeknumber=weeknumber, messages=messages, person_i_got_help=person_i_got_help)
+    return render_template("final_complete.html", weeknumber=weeknumber, messages=messages, person_i_got_help=person_i_got_help, user=user)

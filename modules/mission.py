@@ -1,5 +1,4 @@
 import random
-
 import jwt
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, Blueprint
 from modules.userdatas import krafton_paticipants
@@ -14,7 +13,7 @@ db = client.kraftto
 random_int = random.randint(1, 16)
 
 userdata = {
-    'username': "강철구"
+    'username': "마찬옥"
 }
 
 
