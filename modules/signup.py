@@ -26,6 +26,10 @@ def signup_api():
     check_password = True
     check_password_confirm = True
 
+    find_user = db.user.find_one({"email": email})
+    if find_user:
+        pass
+
     if not re.match(email_pattern, email):
         check_email = False
     if not re.match(password_pattern, password):
