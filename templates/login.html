@@ -21,8 +21,14 @@
             </h3>
             <div class="border rounded p-4 mt-4">
                 <form method="post" class="space-y-4">
-                    <input type="text" name="email" placeholder="E-mail" required class="w-3/4 p-2 border rounded mx-auto block">
-                    <input type="password" name="password" placeholder="Password" required class="w-3/4 p-2 border rounded mx-auto block">
+                    <div class="flex items-center space-x-4">
+                        <label for="email" class="w-1/5 text-right">이메일 : </label>
+                        <input type="text" name="email" id="email" placeholder="E-mail을 입력하세요" required class="w-3/5 p-2 border rounded">
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <label for="password" class="w-1/5 text-right">비밀번호 : </label>
+                        <input type="password" name="password" id="password" placeholder="Password를 입력하세요" required class="w-3/5 p-2 border rounded">
+                    </div>
                     <div class="text-center">
                         <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Login</button>
                     </div>
@@ -31,5 +37,14 @@
             <p class="mt-4 text-gray-600 text-right">Don't have an account? <a href="{{ url_for('signup.signup_func') }}" class="text-blue-500">Sign up</a></p>
         </div>
 
+        {% if login_failed %}
+        <script>
+            alert("로그인에 실패하였습니다. 이메일 혹은 비밀번호를 확인해주세요.");
+        </script>
+        {% else %}
+        //메인 페이지로 넘어가기
+        {% endif %}
+
     </body>
 </html>
+
