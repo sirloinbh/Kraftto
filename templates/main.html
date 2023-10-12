@@ -10,6 +10,49 @@
         <meta name="keywords" content="Jinja2, 서버사이드 렌더링, 웹 개발, 템플릿 엔진">
         <!-- Tailwind CSS CDN -->
         <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+        <style>
+            .modal {
+                /* Removed the background color */
+                position: fixed;
+                top: 0; right: 0; bottom: 0; left: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 5px;
+                box-shadow: 1px 1px gray;
+            }
+            
+            .modal-content {
+                background: white;
+                padding: 40px; /* Increased the padding to make the modal larger */
+                border-radius: 5px;
+            }
+            
+            .hidden {
+                display: none;
+            }
+            
+            .slot-machine {
+                border: 1px solid lightgray;
+                height: 50px;
+                overflow: hidden;
+                border-radius: 3px;
+            }
+            
+            .slot-values {
+                display: flex;
+                flex-direction: column;
+                transform: translateY(0);
+            }
+            
+            .value {
+                height: 50px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            
+        </style>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
             $(document).ready(function() {
@@ -42,6 +85,7 @@
                 });
             });
         </script>
+        
     </head>
 
     <body class="bg-gray-100 h-screen flex flex-col justify-center items-center">
@@ -65,28 +109,40 @@
 
             </div>
 
-            <!-- Updated Modal Design -->
-            <div id="modal" class="fixed inset-0 flex items-center justify-center p-4 hidden">
-                <div class="bg-white p-8 rounded-lg shadow-md w-1/2 flex flex-col">
-                    <h3 class="text-2xl font-semibold mb-4">룰렛 결과</h3>
-                    <div class="border rounded p-4 mt-4 flex-grow">
+            <div class="app">
+                <!-- 모달창 -->
+                <div id="modal" class="modal fixed inset-0 flex items-center justify-center p-4 hidden">
+                    <div class="modal-content bg-white p-8 rounded-lg shadow-md w-1/2 flex flex-col">
                         <!-- 슬롯 머신 -->
                         <div class="slot-machine">
-                            <div class="slot-window">
+                            <div class="slot-window ">
                                 <div class="slot-values">
                                     <div class="value">1</div>
                                     <div class="value">2</div>
-                                    <!-- ... other values ... -->
+                                    <div class="value">3</div>
+                                    <div class="value">4</div>
+                                    <div class="value">5</div>
+                                    <div class="value">6</div>
+                                    <div class="value">7</div>
+                                    <div class="value">8</div>
+                                    <div class="value">9</div>
+                                    <div class="value">10</div>
+                                    <div class="value">11</div>
+                                    <div class="value">12</div>
+                                    <div class="value">13</div>
+                                    <div class="value">14</div>
+                                    <div class="value">15</div>
+                                    <div class="value">16</div>
+            
                                 </div>
                             </div>
                         </div>
+                        <!-- 시작 및 닫기 버튼 -->
+                        <button id="startSlot" class="btn-start mt-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mx-auto">Start</button>
+                        <button id="closeModal" class="btn-close mt-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mx-auto">Close</button>
                     </div>
-                    <button id="startSlot" class="btn-start mt-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mx-auto">Start</button>
-                    <button id="closeModal" class="btn-close mt-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mx-auto">Close</button>
                 </div>
             </div>
-        </div>
-
             {% else %}
 
 
