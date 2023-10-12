@@ -24,10 +24,13 @@ def signup_func():
             'OS': OS,
             'gender': gender,
             'junglenumber': junglenumber,
+            "is_manitto": False,
+            "person_i_help": "",
+            "person_i_got_help": "",
         }
 
         db.user.insert_one(new_user)
 
-        return redirect(url_for('login.login'))
+        return redirect(url_for('login.login_func'))
     else:
         return render_template('signup.html')

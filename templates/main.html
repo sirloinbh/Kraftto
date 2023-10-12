@@ -19,7 +19,12 @@
 
             {% if is_manitto %}
             <h3 class="text-2xl font-semibold mb-4">
-                당신은 {{ userdata.name }} 의 마니또입니다.
+                {% if user == None %}
+                당신은 아직 마니또가 없습니다. 룰렛을 돌려주세요.
+                <a href="{{ url_for('main.roulette_func') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" href="">룰렛 돌리기</a>
+                {% else %}
+                당신은 {{ user.person_i_help }}의 마니또입니다.
+                {% endif %}
             </h3>
             <div class="border rounded p-4 mt-4">
                 <ul class="list-disc pl-5 mb-4">
@@ -38,11 +43,13 @@
             {% endif %}
 
             <h3 class="text-2xl font-semibold mb-4">미션 확인</h3>
+
             <div class="border rounded p-4 mt-4 text-center space-y-4">
-                <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission.mission', weeknumber=1) }}">1주차 미션</a>
-                <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission.mission', weeknumber=2) }}">2주차 미션</a>
-                <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission.mission', weeknumber=3) }}">3주차 미션</a>
-                <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission.mission', weeknumber=4) }}">4주차 미션</a>
+                <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission.mission_func', weeknumber=1) }}">1주차 미션</a>
+                <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission.mission_func', weeknumber=2) }}">2주차 미션</a>
+                <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission.mission_func', weeknumber=3) }}">3주차 미션</a>
+                <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission.mission_func', weeknumber=4) }}">4주차 미션</a>
+
             </div>
 
         </div>
