@@ -26,7 +26,7 @@ def main_func():
 
         if not user['is_manitto']:
             print("마니또가 아직 없습니다. 룰렛을 돌려주세요.")
-            return render_template('main.html', user=None, is_manitto=True)
+            return render_template('main.html', user=user, is_manitto=True)
 
         if user['person_i_got_help'] == '':
             users = list(db.user.find())
