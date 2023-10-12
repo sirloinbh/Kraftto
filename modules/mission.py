@@ -13,7 +13,7 @@ db = client.kraftto
 random_int = random.randint(1, 16)
 
 userdata = {
-    'username': "마찬옥"
+    'username': "강철구"
 }
 
 
@@ -33,17 +33,17 @@ def mission_func():
             print("생성")
             return redirect(url_for('main.main_func'))
 
-        user_data = db.user.find_one({'username': userdata['username']})
+        user = db.user.find_one({'username': userdata['username']})
 
-        if user_data['current_mission'] == "":
-            user_data['current_mission'] = random.choice(
+        if user['current_mission'] == "":
+            user['current_mission'] = random.choice(
                 list(db.mission.find()))['description']
             db.user.update_one(
                 {'username': userdata['username']},
-                {"$set": {'current_mission': user_data['current_mission']}}
+                {"$set": {'current_mission': user['current_mission']}}
             )
 
-        random_mission = user_data['current_mission']
+        random_mission = user['current_mission']
 
         return render_template('mission.html', weeknumber=weeknumber, random_mission=random_mission)
     except jwt.ExpiredSignatureError:

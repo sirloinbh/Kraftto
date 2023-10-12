@@ -9,7 +9,7 @@ db = client.kraftto
 mission_complete_bp = Blueprint('mission_complete', __name__)
 
 userdata = {
-    "username": "마찬옥"
+    "username": "강철구"
 }
 
 
@@ -19,8 +19,9 @@ def mission_complete_fun():
     person_i_got_help = db.user.find_one({'username': userdata['username']})[
         'person_i_got_help']
     messages = list(db.message.find({'username': person_i_got_help}))
-    print(person_i_got_help)
-    print(messages)
+    hint = db.user.find_one({'username': person_i_got_help})
+    print(hint["OS"])
+
     return render_template("complete.html", weeknumber=weeknumber, messages=messages)
 
 

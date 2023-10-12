@@ -16,7 +16,7 @@ person_i_help = random.choice(krafton_paticipants).split('.')
 main_bp = Blueprint('main', __name__)
 
 userdata = {
-    "username": "마찬옥"
+    "username": "강철구"
 }
 
 
