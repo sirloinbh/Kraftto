@@ -10,82 +10,6 @@
         <meta name="keywords" content="Jinja2, 서버사이드 렌더링, 웹 개발, 템플릿 엔진">
         <!-- Tailwind CSS CDN -->
         <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-        <style>
-            .modal {
-                /* Removed the background color */
-                position: fixed;
-                top: 0; right: 0; bottom: 0; left: 0;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                border-radius: 5px;
-                box-shadow: 1px 1px gray;
-            }
-            
-            .modal-content {
-                background: white;
-                padding: 40px; /* Increased the padding to make the modal larger */
-                border-radius: 5px;
-            }
-            
-            .hidden {
-                display: none;
-            }
-            
-            .slot-machine {
-                border: 1px solid lightgray;
-                height: 50px;
-                overflow: hidden;
-                border-radius: 3px;
-            }
-            
-            .slot-values {
-                display: flex;
-                flex-direction: column;
-                transform: translateY(0);
-            }
-            
-            .value {
-                height: 50px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-            
-        </style>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-            $(document).ready(function() {
-                var isSpinning = false;
-                var spinInterval;
-            
-                $("#openModal").click(function() {
-                    $("#modal").removeClass("hidden");
-                });
-            
-                $("#closeModal").click(function() {
-                    $("#modal").addClass("hidden");
-                });
-            
-                $("#startSlot").click(function() {
-                    if (!isSpinning) {
-                        isSpinning = true;
-                        spinInterval = setInterval(function() {
-                            var y = parseInt($(".slot-values").css("transform").split(",")[5]);
-                            y -= 50;
-                            if (y <= -800) y = 0; // 16 values * 50px each = 800px
-                            $(".slot-values").css("transform", "translateY(" + y + "px)");
-                        }, 100);
-            
-                        setTimeout(function() {
-                            clearInterval(spinInterval);
-                            isSpinning = false;
-                        }, Math.random() * 5000 + 2000); // Random stop between 2 to 7 seconds
-                    }
-                });
-            });
-        </script>
-        
     </head>
 
     <body class="bg-gray-100 h-screen flex flex-col justify-center items-center">
@@ -97,7 +21,7 @@
             <!-- Username and Logout Button -->
             <div class="absolute top-4 right-4 flex items-center">
                 <span class="text-xl mr-4">{{ user.username }}</span>
-                <a href="" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">로그아웃</a>
+                <button onclick="logout()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">로그아웃</button>
             </div>
 
             {% if user == None %}
@@ -223,7 +147,34 @@
             </div>
 
         </div>
-
+        <script>
+            let spinning = false;
+        
+            function openSlotMachine() {
+                document.getElementById('slotMachineModal').classList.remove('hidden');
+                startSpinning();
+            }
+        
+            function startSpinning() {
+                if (!spinning) {
+                    spinning = true;
+                    let slot = document.querySelector('.slot');
+                    let randomTop = Math.floor(Math.random() * 150); // 무작위 위치를 계산합니다.
+                    slot.style.top = `-${randomTop}px`;
+        
+                    document.getElementById('spinButton').innerText = "STOP";
+                } else {
+                    stopSpinning();
+                }
+            }
+        
+            function stopSpinning() {
+                spinning = false;
+                document.getElementById('spinButton').innerText = "돌리기";
+            }
+        
+            document.getElementById('spinButton').addEventListener('click', startSpinning);
+        </script>
     </body>
 
 </html>
