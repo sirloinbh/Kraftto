@@ -15,6 +15,49 @@
     <!-- jQuery 를 포함합니다. -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <style>
+        .modal {
+            /* Removed the background color */
+            position: fixed;
+            top: 0; right: 0; bottom: 0; left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+            box-shadow: 1px 1px gray;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 40px; /* Increased the padding to make the modal larger */
+            border-radius: 5px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .slot-machine {
+            border: 1px solid lightgray;
+            height: 50px;
+            overflow: hidden;
+            border-radius: 3px;
+        }
+        
+        .slot-values {
+            display: flex;
+            flex-direction: column;
+            transform: translateY(0);
+        }
+        
+        .value {
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+    </style>
 
 </head>
 
@@ -36,7 +79,31 @@
         <div class="border rounded p-4 mt-4">
             <div>
                 <p>16개의 미션 중 랜덤 1개가 배정됩니다!</p>
-                <p> {{ random_mission }} </p>
+                <div class="border rounded p-4 mt-4 flex justify-center items-center">
+                    <button id="openModal" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 btn-open">룰렛 돌리기</button>
+    
+                </div>
+                <div class="app">
+                    <!-- 모달창 -->
+                    <div id="modal" class="modal fixed inset-0 flex items-center justify-center p-4 hidden">
+                        <div class="modal-content bg-white p-8 rounded-lg shadow-md w-1/2 flex flex-col">
+                            <p>start를 누르면 당신의 마니또 미션이 선택됩니다.
+                            <!-- 슬롯 머신 -->
+                            <div class="slot-machine">
+                                <div class="slot-window ">
+                                    <div class="slot-values">
+                                        {% for random_mission in random_missions %}
+                                            <div class="value">{{ random_mission }}</div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 시작 및 닫기 버튼 -->
+                            <button id="startSlot" class="btn-start mt-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mx-auto">Start</button>
+                            <button id="closeModal" class="btn-close mt-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mx-auto">Close</button>
+                        </div>
+                    </div>
+                </div>
                 <p>미션을 완수한 인증 사진을 업로드하고, 응원의 메시지와 함께 미션 인증 버튼을 눌러주세요</p>
             </div>
             <div class="text-center mt-4">
@@ -104,6 +171,47 @@
             $.removeCookie('mytoken', {path: '/'});
             window.location.href = '/';
         }
+        function logout() {
+            $.removeCookie('mytoken', {path: '/'});
+            window.location.href = '/';
+        }
+    
+        $(document).ready(function() {
+            var isSpinning = false;
+            var spinInterval;
+            var selectedmission;
+
+            $("#openModal").click(function() {
+                $("#modal").removeClass("hidden");
+            });
+
+            $("#closeModal").click(function() {
+                $("#modal").addClass("hidden");
+            });
+
+            $("#startSlot").click(function() {
+                if (!isSpinning) {
+                    isSpinning = true;
+                    spinInterval = setInterval(function() {
+                        var y = parseInt($(".slot-values").css("transform").split(",")[5]);
+                        y -= 50;
+                        if (y <= -800) y = 0; // 16 values * 50px each = 800px
+                        $(".slot-values").css("transform", "translateY(" + y + "px)");
+                    }, 100);
+
+                    setTimeout(function() {
+                        clearInterval(spinInterval);
+                        isSpinning = false;
+
+                        var y = Math.abs(parseInt($(".slot-values").css("transform").split(",")[5]));
+                        var index = (y / 50) % 16;
+                        selectedmission = $(".value").eq(index).text();
+                        console.log("selectedperson :", selectedmission);
+
+                    }, Math.random() * 5000 + 2000);
+                }
+            });
+        });
     </script>
 </body>
 
