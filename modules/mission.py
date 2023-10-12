@@ -23,7 +23,7 @@ def mission_func():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user = db.user.find_one({"email": payload["email"]})
-        print(user)
+        is_current_mission = False
 
         if request.method == "POST":
             message = {
@@ -35,18 +35,35 @@ def mission_func():
             print("생성")
             return redirect(url_for('main.main_func'))
 
-        if user['current_mission'] == "":
-            user['current_mission'] = random.choice(
-                list(db.mission.find()))['description']
-            db.user.update_one(
-                {'username': user['username']},
-                {"$set": {'current_mission': user['current_mission']}}
-            )
+        missions_lists = list(db.mission.find())
+        random_missions = [mission['description']
+                           for mission in missions_lists]
+        print(random_missions)
 
-        random_mission = user['current_mission']
+        return render_template('mission.html', user=user, weeknumber=weeknumber, random_missions=random_missions)
 
-        return render_template('mission.html', user=None, weeknumber=weeknumber, random_mission=random_mission)
     except jwt.ExpiredSignatureError:
-        return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
+        return redirect(url_for("login.login_api", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
-        return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
+        return redirect(url_for("login.login_api", msg="로그인 정보가 존재하지 않습니다."))
+
+
+@mission_bp.route('/mission/rullet', methods=['POST', "GET"])
+def mission_rullet_func():
+    token_receive = request.cookies.get('mytoken')
+
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user = db.user.find_one({"email": payload["email"]})
+
+        print(request.form.get('selectedmission'))
+        db.user.update_one({'username': user['username']}, {
+                           '$set': {'current_mission': request.form.get('selectedmission')}})
+
+        # return redirect(url_for('main.main_func'))
+        return render_template('main.html', user=user)
+
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login.login_func", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("login.login_func", msg="로그인 정보가 존재하지 않습니다."))
