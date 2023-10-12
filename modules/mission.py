@@ -1,6 +1,8 @@
 import random
 import jwt
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, Blueprint
+
+from modules.login import SECRET_KEY
 from modules.userdatas import krafton_paticipants
 from pymongo import MongoClient
 
@@ -12,10 +14,6 @@ client = MongoClient('localhost', 27017)
 db = client.kraftto
 random_int = random.randint(1, 16)
 
-userdata = {
-    'username': "강철구"
-}
-
 
 @mission_bp.route('/mission', methods=['GET', 'POST'])
 def mission_func():
@@ -23,9 +21,13 @@ def mission_func():
     weeknumber = request.args.get("weeknumber")
 
     try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user = db.user.find_one({"email": payload["email"]})
+        print(user)
+
         if request.method == "POST":
             message = {
-                'username': userdata['username'],
+                'username': user['username'],
                 f"message{weeknumber}": request.form.get("message"),
                 "is_approved": False,
             }
@@ -33,13 +35,11 @@ def mission_func():
             print("생성")
             return redirect(url_for('main.main_func'))
 
-        user = db.user.find_one({'username': userdata['username']})
-
         if user['current_mission'] == "":
             user['current_mission'] = random.choice(
                 list(db.mission.find()))['description']
             db.user.update_one(
-                {'username': userdata['username']},
+                {'username': user['username']},
                 {"$set": {'current_mission': user['current_mission']}}
             )
 
