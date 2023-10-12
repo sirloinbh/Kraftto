@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, Blueprint, redirect
+from flask import Flask, request, render_template, Blueprint
 from pymongo import MongoClient
 from modules.userdatas import krafton_paticipants
 import random
@@ -11,10 +11,7 @@ admin_bp = Blueprint('admin', __name__)
 
 @admin_bp.route('/admin', methods=['GET', 'POST'])
 def admin_func():
-    not_approved_message = list(db.message.find({'is_approved': False}))
-    # print(not_approved_message)
-
-    return render_template('admin.html', messages=not_approved_message)
+    return render_template('admin.html')
 
 
 @admin_bp.route('/admin/update', methods=['GET', 'POST'])

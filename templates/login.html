@@ -4,32 +4,39 @@
         <title>
             Login
         </title>
+
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="이 페이지는 Jinja2와 서버사이드 렌더링에 대한 정보를 제공합니다.">
         <meta name="keywords" content="Jinja2, 서버사이드 렌더링, 웹 개발, 템플릿 엔진">
         <!-- Tailwind CSS CDN -->
         <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    </head>
-    <script>
-        function login() {
-        $.ajax({
-            type: "POST",
-            url: "/api/login",
-            data: {id_give: $('#userid').val(), pw_give: $('#userpw').val()},
-            success: function (response) {
-                if (response['result'] == 'success') {
-                    $.cookie('mytoken', response['token']);
 
-                    alert('로그인 완료!')
-                    window.location.href = '/index'
-                } else {
-                    alert(response['msg'])
-                }
+        <!-- jQuery 를 포함합니다. -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+        <script>
+            function login() {
+                alert('안녕');
+                $.ajax({
+                    type: "POST",
+                    url: "/login",
+                    data: { 'email': $('#email').val(), 'password': $('#password').val()},
+                    success: function (response) {
+                        if (response['result'] == 'success') {
+                            $.cookie('mytoken', response['token'], { expires: 7, path:'/'});
+
+                            alert('로그인 완료!')
+                            window.location.replace("/main")
+                        } else {
+                            alert(response['msg'])
+                        }
+                    },
+                });
             }
-        })
-        }
-    </script>
+        </script>
+    </head>
     <body class="bg-gray-100 h-screen flex flex-col justify-center items-center">
 
         <h1 class="text-4xl font-bold mb-4">KRAFTTO</h1>
@@ -49,20 +56,12 @@
                         <input type="password" name="password" id="password" placeholder="Password를 입력하세요" required class="w-3/5 p-2 border rounded">
                     </div>
                     <div class="text-center">
-                        <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Login</button>
+                        <button onclick="login()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Login</button>
                     </div>
                 </form>
             </div>
             <p class="mt-4 text-gray-600 text-right">Don't have an account? <a href="{{ url_for('signup.signup_func') }}" class="text-blue-500">Sign up</a></p>
         </div>
-
-        {% if login_failed %}
-        <script>
-            alert("로그인에 실패하였습니다. 이메일 혹은 비밀번호를 확인해주세요.");
-        </script>
-        {% else %}
-        //메인 페이지로 넘어가기
-        {% endif %}
 
     </body>
 </html>

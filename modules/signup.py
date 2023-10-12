@@ -8,33 +8,35 @@ db = client.kraftto
 signup_bp = Blueprint('signup', __name__)
 
 
-@signup_bp.route('/signup', methods=['GET', 'POST'])
+@signup_bp.route('/signup', methods=['GET'])
 def signup_func():
-    if request.method == 'POST':
-        username = request.form['username']
-        email = request.form['email']
-        password = request.form['password']
-        OS = request.form['OS']
-        gender = request.form['gender']
-        junglenumber = request.form['junglenumber']
+    return render_template('signup.html')
 
-        hashed_pw = hashlib.sha256(password.encode('utf-8')).hexdigest()
 
-        new_user = {
-            'username': username,
-            'email': email,
-            'password': hashed_pw,
-            'OS': OS,
-            'gender': gender,
-            'junglenumber': junglenumber,
-            "is_manitto": False,
-            "person_i_help": "",
-            "person_i_got_help": "",
-            "current_mission": ""
-        }
+@signup_bp.route('/signup', methods=['POST'])
+def signup_api():
+    username = request.form['username']
+    email = request.form['email']
+    password = request.form['password']
+    OS = request.form['OS']
+    gender = request.form['gender']
+    junglenumber = request.form['junglenumber']
 
-        db.user.insert_one(new_user)
+    hashed_pw = hashlib.sha256(password.encode('utf-8')).hexdigest()
 
-        return redirect(url_for('login.login_func'))
-    else:
-        return render_template('signup.html')
+    new_user = {
+        'username': username,
+        'email': email,
+        'password': hashed_pw,
+        'OS': OS,
+        'gender': gender,
+        'junglenumber': junglenumber,
+        "is_manitto": False,
+        "person_i_help": "",
+        "person_i_got_help": "",
+        "current_mission": ""
+    }
+
+    db.user.insert_one(new_user)
+
+    return render_template('login.html')

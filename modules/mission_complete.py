@@ -1,4 +1,5 @@
-from flask import Flask, request, render_template, Blueprint, url_for
+import jwt
+from flask import Flask, request, render_template, Blueprint, redirect, url_for
 from pymongo import MongoClient
 from modules.userdatas import krafton_paticipants
 
