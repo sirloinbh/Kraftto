@@ -34,7 +34,8 @@ def login_api():
             'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=60 * 60 * 1)
         }
         if find_user['email'] == 'admin':
-            return render_template('admin.html')
+            return redirect(url_for('admin.admin_func'))
+
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
         return jsonify({'result': 'success', 'token': token})
     else:
