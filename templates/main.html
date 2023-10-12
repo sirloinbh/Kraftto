@@ -16,7 +16,7 @@
 
         <h1 class="text-4xl font-bold mb-4">KRAFTTO</h1>
         <div class="bg-white p-8 rounded-lg shadow-md w-1/2">
-
+            
             {% if user == None %}
             <h3 class="text-2xl font-semibold mb-4">
                 당신은 아직 마니또가 없습니다. 룰렛을 돌려주세요.
@@ -25,6 +25,8 @@
                 <a href="{{ url_for('main.roulette_func') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">룰렛 돌리기</a>
             </div>
             {% else %}
+
+
             <h3 class="text-2xl font-semibold mb-4">
                 당신은 {{ user.person_i_help }}의 마니또입니다.
             </h3>
@@ -33,19 +35,7 @@
                 <div class="border rounded p-4 mt-4">
                     <p>미션완료 게이지</p>
                     <div class="bg-gray-300 h-5 rounded-full mb-6">
-                        <div class="h-full bg-blue-500 rounded-full" style="width: 
-                            {% if final_complete %}
-                            100%
-                            {% elif third_hint %}
-                            75%
-                            {% elif second_hint %}
-                            50%
-                            {% elif first_hint %}
-                            25%
-                            {% else %}
-                            0%
-                            {% endif %}
-                        ;"></div>
+                        <div class="h-full bg-blue-500 rounded-full"></div>
                     </div>
                     <!-- 퍼센트를 문자열로 표시 -->
                     <p class="text-center">
@@ -111,8 +101,8 @@
                 <a class="block bg-gray-400 text-white px-4 py-2 rounded w-full text-center" href="#" onclick="return false;">4주차 미션</a>
                 {% endif %}
         
+>>>>>>> cfb245547812d7be45df7ea0bb6978ec92b2a90e
             </div>
-
         </div>
     </body>
 </html>

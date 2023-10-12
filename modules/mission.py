@@ -12,6 +12,8 @@ mission_bp = Blueprint('mission', __name__)
 client = MongoClient('localhost', 27017)
 db = client.kraftto
 random_int = random.randint(1, 16)
+
+
 # mission_collection = db["mission"]
 # mission_lists = [doc['mission'] for doc in mission_collection.find()]
 # print(mission_lists)
@@ -25,8 +27,10 @@ def mission_func():
 
     try:
         if request.method == "POST":
-            message = request.form.get("message")
+            message = {f"message{weeknumber}": request.form.get("message")}
             print(message)
+            db.user.update_one({'username': '마찬옥'}, {
+                '$set': {f"message{weeknumber}": request.form.get("message")}})
 
             if weeknumber == '4':
                 return redirect(url_for("mission_complete.mission_complete_fun"))
@@ -41,7 +45,3 @@ def mission_func():
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
