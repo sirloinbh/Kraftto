@@ -111,7 +111,17 @@
                 <div class="border rounded p-4 mt-4">
                     <p>미션완료 게이지</p>
                     <div class="bg-gray-300 h-5 rounded-full mb-6">
-                        <div class="h-full bg-blue-500 rounded-full"></div>
+                        {% if week4_approved %}
+                        <div class="h-full bg-blue-500 rounded-full w-full"></div>
+                        {% elif week3_approved %}
+                        <div class="h-full bg-blue-500 rounded-full w-3/4"></div>
+                        {% elif week2_approved %}
+                        <div class="h-full bg-blue-500 rounded-full w-1/2"></div>
+                        {% elif week1_approved %}
+                        <div class="h-full bg-blue-500 rounded-full w-1/4"></div>
+                        {% else %}
+                        <div class="h-full bg-blue-500 rounded-full w-0"></div>
+                        {% endif %}
                     </div>
                     <!-- 퍼센트를 문자열로 표시 -->
                     <p class="text-center">
