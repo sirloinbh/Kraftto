@@ -17,39 +17,100 @@
         <h1 class="text-4xl font-bold mb-4">KRAFTTO</h1>
         <div class="bg-white p-8 rounded-lg shadow-md w-1/2">
 
-            {% if is_manitto %}
+            {% if user == None %}
             <h3 class="text-2xl font-semibold mb-4">
-                {% if user == None %}
                 당신은 아직 마니또가 없습니다. 룰렛을 돌려주세요.
-                <a href="{{ url_for('main.roulette_func') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" href="">룰렛 돌리기</a>
-                {% else %}
-                당신은 {{ user.person_i_help }}의 마니또입니다.
-                {% endif %}
             </h3>
-            <div class="border rounded p-4 mt-4">
-                <ul class="list-disc pl-5 mb-4">
-                    <li class="mb-2">{{ first_hint }}</li>
-                    <li class="mb-2">{{ second_hint }}</li>
-                    <li class="mb-2">{{ third_hint }}</li>
-                </ul>
+            <div class="border rounded p-4 mt-4 flex justify-center items-center">
+                <a href="{{ url_for('main.roulette_func') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">룰렛 돌리기</a>
             </div>
             {% else %}
             <h3 class="text-2xl font-semibold mb-4">
-                당신은 아직 도울 대상이 없습니다 룰렛을 돌려주세요!
+                당신은 {{ user.person_i_help }}의 마니또입니다.
             </h3>
-            <button onclick="startRoulette()">룰렛 시작</button>
-            <!-- 전체 참가자 리스트를 표시하고, 룰렛을 실행하여 무작위로 선택된 참가자의 데이터를 저장하는 로직이 필요합니다. -->
-            <!-- 이 부분은 JavaScript 및 서버 로직이 필요합니다. -->
+    
+                <!-- 게이지 바 -->
+                <div class="border rounded p-4 mt-4">
+                    <p>미션완료 게이지</p>
+                    <div class="bg-gray-300 h-5 rounded-full mb-6">
+                        <div class="h-full bg-blue-500 rounded-full" style="width: 
+                            {% if final_complete %}
+                            100%
+                            {% elif third_hint %}
+                            75%
+                            {% elif second_hint %}
+                            50%
+                            {% elif first_hint %}
+                            25%
+                            {% else %}
+                            0%
+                            {% endif %}
+                        ;"></div>
+                    </div>
+                    <!-- 퍼센트를 문자열로 표시 -->
+                    <p class="text-center">
+                        {% if final_complete %}
+                        100%
+                        {% elif third_hint %}
+                        75%
+                        {% elif second_hint %}
+                        50%
+                        {% elif first_hint %}
+                        25%
+                        {% else %}
+                        0%
+                        {% endif %}
+                    </p>
+                </div>
             {% endif %}
 
             <h3 class="text-2xl font-semibold mb-4">미션 확인</h3>
 
             <div class="border rounded p-4 mt-4 text-center space-y-4">
-                <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission.mission_func', weeknumber=1) }}">1주차 미션</a>
-                <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission.mission_func', weeknumber=2) }}">2주차 미션</a>
-                <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission.mission_func', weeknumber=3) }}">3주차 미션</a>
-                <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission.mission_func', weeknumber=4) }}">4주차 미션</a>
-
+                <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission.mission_func', weeknumber=1) }}">
+                    {% if week1_approved %}
+                    1주차 보상
+                    {% else %}
+                    1주차 미션
+                    {% endif %}
+                </a>
+        
+                {% if week1_approved %}
+                <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission.mission_func', weeknumber=2) }}">
+                    {% if week2_approved %}
+                    2주차 보상
+                    {% else %}
+                    2주차 미션
+                    {% endif %}
+                </a>
+                {% else %}
+                <a class="block bg-gray-400 text-white px-4 py-2 rounded w-full text-center" href="#" onclick="return false;">2주차 미션</a>
+                {% endif %}
+        
+                {% if week2_approved %}
+                <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission.mission_func', weeknumber=3) }}">
+                    {% if week3_approved %}
+                    3주차 보상
+                    {% else %}
+                    3주차 미션
+                    {% endif %}
+                </a>
+                {% else %}
+                <a class="block bg-gray-400 text-white px-4 py-2 rounded w-full text-center" href="#" onclick="return false;">3주차 미션</a>
+                {% endif %}
+        
+                {% if week3_approved %}
+                <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission.mission_func', weeknumber=4) }}">
+                    {% if week4_approved %}
+                    4주차 보상
+                    {% else %}
+                    4주차 미션
+                    {% endif %}
+                </a>
+                {% else %}
+                <a class="block bg-gray-400 text-white px-4 py-2 rounded w-full text-center" href="#" onclick="return false;">4주차 미션</a>
+                {% endif %}
+        
             </div>
 
         </div>
