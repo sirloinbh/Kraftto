@@ -34,10 +34,7 @@ def signup_api():
         "is_manitto": False,
         "person_i_help": "",
         "person_i_got_help": "",
-        "message1": "",
-        "message2": "",
-        "message3": "",
-        "message4": "",
+        "current_mission": ""
     }
 
     db.user.insert_one(new_user)
