@@ -208,45 +208,46 @@
                 var isSpinning = false;
                 var spinInterval;
                 var selectedperson;
-
+                var participantCount = $(".value").length; // Get the number of participants
+                var totalHeight = participantCount * 50; // Calculate total height
+            
                 $("#openModal").click(function() {
                     $("#modal").removeClass("hidden");
                 });
-
+            
                 $("#closeModal").click(function() {
                     $("#modal").addClass("hidden");
                 });
-
+            
                 $("#startSlot").click(function() {
                     if (!isSpinning) {
                         isSpinning = true;
                         spinInterval = setInterval(function() {
                             var y = parseInt($(".slot-values").css("transform").split(",")[5]);
                             y -= 50;
-                            if (y <= -800) y = 0; // 16 values * 50px each = 800px
+                            if (y <= -totalHeight) y = 0; 
                             $(".slot-values").css("transform", "translateY(" + y + "px)");
-                        }, 100);
-
+                            console.log("Current position:", y);  // Add this line to debug
+                        }, 10);
+            
                         setTimeout(function() {
                             clearInterval(spinInterval);
                             isSpinning = false;
-
+            
                             var y = Math.abs(parseInt($(".slot-values").css("transform").split(",")[5]));
-                            var index = (y / 50) % 16;
+                            var index = (y / 50) % participantCount;
                             selectedperson = $(".value").eq(index).text();
                             console.log("selectedperson :", selectedperson);
                             
                             $.ajax({
                                 type: 'POST',
-                                url: '/main',  // Use the correct URL for your Flask app
+                                url: '/main',
                                 data: { selectedperson: selectedperson },
                                 success: function(response) {
-                                    // Handle the response from the server if needed
                                     console.log(response);
                                     window.location.href = '/main';
                                 },
                                 error: function(err) {
-                                    // Handle any errors
                                     console.error(err);
                                 }
                             });
