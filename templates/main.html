@@ -29,45 +29,88 @@
                 당신은 {{ user.person_i_help }}의 마니또입니다.
             </h3>
     
-            <!-- 게이지 바 -->
-            <div class="border rounded p-4 mt-4">
-                <p>미션완료 게이지</p>
-                <div class="bg-gray-300 h-5 rounded-full mb-6">
-                    <div class="h-full bg-blue-500 rounded-full" style="width: 
-                        {% if third_hint %}
+                <!-- 게이지 바 -->
+                <div class="border rounded p-4 mt-4">
+                    <p>미션완료 게이지</p>
+                    <div class="bg-gray-300 h-5 rounded-full mb-6">
+                        <div class="h-full bg-blue-500 rounded-full" style="width: 
+                            {% if final_complete %}
+                            100%
+                            {% elif third_hint %}
+                            75%
+                            {% elif second_hint %}
+                            50%
+                            {% elif first_hint %}
+                            25%
+                            {% else %}
+                            0%
+                            {% endif %}
+                        ;"></div>
+                    </div>
+                    <!-- 퍼센트를 문자열로 표시 -->
+                    <p class="text-center">
+                        {% if final_complete %}
                         100%
+                        {% elif third_hint %}
+                        75%
                         {% elif second_hint %}
-                        66.66%
+                        50%
                         {% elif first_hint %}
-                        33.33%
+                        25%
                         {% else %}
                         0%
                         {% endif %}
-                    ;"></div>
+                    </p>
                 </div>
-                <!-- 퍼센트를 문자열로 표시 -->
-                <p class="text-center">
-                    {% if third_hint %}
-                    100%
-                    {% elif second_hint %}
-                    66.66%
-                    {% elif first_hint %}
-                    33.33%
-                    {% else %}
-                    0%
-                    {% endif %}
-                </p>
-            </div>
             {% endif %}
 
             <h3 class="text-2xl font-semibold mb-4">미션 확인</h3>
 
             <div class="border rounded p-4 mt-4 text-center space-y-4">
-                <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission.mission_func', weeknumber=1) }}">1주차 미션</a>
-                <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission.mission_func', weeknumber=2) }}">2주차 미션</a>
-                <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission.mission_func', weeknumber=3) }}">3주차 미션</a>
-                <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission.mission_func', weeknumber=4) }}">4주차 미션</a>
-
+                <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission.mission_func', weeknumber=1) }}">
+                    {% if week1_approved %}
+                    1주차 보상
+                    {% else %}
+                    1주차 미션
+                    {% endif %}
+                </a>
+        
+                {% if week1_approved %}
+                <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission.mission_func', weeknumber=2) }}">
+                    {% if week2_approved %}
+                    2주차 보상
+                    {% else %}
+                    2주차 미션
+                    {% endif %}
+                </a>
+                {% else %}
+                <a class="block bg-gray-400 text-white px-4 py-2 rounded w-full text-center" href="#" onclick="return false;">2주차 미션</a>
+                {% endif %}
+        
+                {% if week2_approved %}
+                <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission.mission_func', weeknumber=3) }}">
+                    {% if week3_approved %}
+                    3주차 보상
+                    {% else %}
+                    3주차 미션
+                    {% endif %}
+                </a>
+                {% else %}
+                <a class="block bg-gray-400 text-white px-4 py-2 rounded w-full text-center" href="#" onclick="return false;">3주차 미션</a>
+                {% endif %}
+        
+                {% if week3_approved %}
+                <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission.mission_func', weeknumber=4) }}">
+                    {% if week4_approved %}
+                    4주차 보상
+                    {% else %}
+                    4주차 미션
+                    {% endif %}
+                </a>
+                {% else %}
+                <a class="block bg-gray-400 text-white px-4 py-2 rounded w-full text-center" href="#" onclick="return false;">4주차 미션</a>
+                {% endif %}
+        
             </div>
 
         </div>
