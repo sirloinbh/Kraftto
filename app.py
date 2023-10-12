@@ -1,3 +1,6 @@
+import datetime
+import hashlib
+
 import jwt
 from flask import Flask, render_template, request, session, redirect, url_for, flash, jsonify
 from pymongo import MongoClient
@@ -35,6 +38,27 @@ app.register_blueprint(admin_bp)
 @app.route('/')
 def main():
     return render_template('index.html')
+
+
+@app.route('/login', methods=['POST'])
+def login_api():
+    email = request.form['email']
+    password = request.form['password']
+
+    hashed_pw = hashlib.sha256(password.encode('utf-8')).hexdigest()
+
+    find_user = db.user.find_one({'email': email, 'password': hashed_pw})
+    print(find_user)
+
+    if find_user:
+        payload = {
+            'email': email,
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=60 * 60 * 1)
+        }
+        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
+        return jsonify({'result': 'success', 'token': token})
+    else:
+        return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
 
 
 if __name__ == '__main__':
