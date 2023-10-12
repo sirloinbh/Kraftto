@@ -15,6 +15,9 @@ login_bp = Blueprint('login', __name__)
 
 @login_bp.route('/login', methods=['GET'])
 def login_func():
+    token_receive = request.cookies.get('mytoken')
+    if token_receive:
+        return redirect(url_for('main.main_func'))
     return render_template('login.html')
 
 
@@ -26,7 +29,6 @@ def login_api():
     hashed_pw = hashlib.sha256(password.encode('utf-8')).hexdigest()
 
     find_user = db.user.find_one({'email': email, 'password': hashed_pw})
-    print(find_user)
 
     if find_user:
         payload = {
