@@ -1,6 +1,6 @@
 import random
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, Blueprint
-from modules.ramdom_manito import krafton_paticipants, user_datas
+from modules.userdatas import krafton_paticipants
 from modules.mission_data import weekly_missions
 
 
@@ -10,7 +10,7 @@ mission_bp = Blueprint('mission', __name__)
 
 
 @mission_bp.route('/mission', methods=['GET', 'POST'])
-def mission():
+def mission_func():
     weeknumber = request.args.get("weeknumber")
     print(weeknumber)
     if weeknumber == '4':
