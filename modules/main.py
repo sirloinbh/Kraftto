@@ -19,7 +19,7 @@ def main_func():
     if user['is_manitto'] == False:
         print("마니또가 아직 없습니다. 룰렛을 돌려주세요.")
         user = None
-        return render_template('main.html', user=user)
+        return render_template('main.html', user=user, is_manitto=True)
 
     return render_template('main.html', user=user)
 

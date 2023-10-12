@@ -24,7 +24,7 @@
                     <h5 class="text-xl mb-4 text-center">당신의 마니또를 찾아보세요!</h5>
                     <div class="text-center">
 
-                        <a href='' class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">RULE</a>
+                        <a onclick="openModal()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">RULE</a>
                         <a href="{{ url_for('login.login_func') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">START</a>
 
                     </div>
@@ -46,7 +46,7 @@
                         <li class="mb-2">매주 마니또 미션이 주어집니다 미션을 완수하면 당신의 마니또에 대한 힌트가 주어집니다.</li>
                     </ul>
                 </div>
-                <button id="close-btn" class="mt-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mx-auto">Close</button>
+                <button id="close-btn" class="mt-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mx-auto" onclick="closeModal()" >Close</button>
             </div>
         </div>
     </body>

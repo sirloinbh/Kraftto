@@ -16,9 +16,12 @@ def login_func():
         find_user = db.user.find_one({'email': email})
 
         if find_user['password'] == password:
-            # session["logged_in"] = True
-            print('성공')
-            return redirect(url_for("main.main_func"))
+            if email == 'admin':
+                return redirect(url_for("admin.admin_func"))
+                print('성공')
+            else:
+                return redirect(url_for("main.main_func"))
         else:
             return '아이디 또는 비밀번호가 틀립니다.'
+
     return render_template('login.html')
