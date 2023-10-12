@@ -5,6 +5,7 @@ from modules.signup import signup_bp
 from modules.main import main_bp
 from modules.mission_complete import mission_complete_bp
 from modules.mission import mission_bp
+from modules.admin import admin_bp
 
 
 app = Flask(__name__)
@@ -32,6 +33,8 @@ app.register_blueprint(mission_bp)
 # mission Complete
 app.register_blueprint(mission_complete_bp)
 
+# admin
+app.register_blueprint(admin_bp)
 
 if __name__ == '__main__':
     app.run(debug=True)
