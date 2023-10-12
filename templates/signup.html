@@ -105,11 +105,7 @@
             </form>
 
             <div class="flex justify-center">
-                {% if check_password == False or check_email == False or check_password_confirm == False %}
-                    <p class="mt-4 text-gray-600 text-right">Already have an account? <a href="{{ url_for('signup.signup_func') }}" class="text-blue-500">Login</a></p>
-                {% else %}
-                    <p class="mt-4 text-gray-600 text-right">Already have an account? <a href="{{ url_for('login.login_func') }}" class="text-blue-500">Login</a></p>
-                {% endif %}
+                <p class="mt-4 text-gray-600 text-right">Already have an account? <a href="{{ url_for('login.login_func') }}" class="text-blue-500">Login</a></p>
             </div>
         </div>
     </body>
