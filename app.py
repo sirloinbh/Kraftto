@@ -16,7 +16,7 @@ db = client.kraftto
 
 @app.route('/')
 def main():
-    return render_template('Kraftto.html')
+    return render_template('index.html')
 
 
 # login
