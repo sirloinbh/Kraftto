@@ -21,7 +21,7 @@
             <!-- Username and Logout Button -->
             <div class="absolute top-4 right-4 flex items-center">
                 <span class="text-xl mr-4">{{ username }}</span>
-                <a href="{{ url_for('logout') }}" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">로그아웃</a>
+                <a href="{{ url_for('login.login_func') }}" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">로그아웃</a>
             </div>
 
             {% if user == None %}
@@ -80,32 +80,39 @@
             <h3 class="text-2xl font-semibold mb-4">미션 확인</h3>
 
             <div class="border rounded p-4 mt-4 text-center space-y-4">
-                <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission.mission_func', weeknumber=1) }}">
-                    {% if week1_approved %}
-                    1주차 보상
-                    {% else %}
-                    1주차 미션
-                    {% endif %}
-                </a>
-        
                 {% if week1_approved %}
-                <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission.mission_func', weeknumber=2) }}">
-                    {% if week2_approved %}
-                    2주차 보상
-                    {% else %}
-                    2주차 미션
-                    {% endif %}
+                <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission_complete.mission_complete_fun', weeknumber=1) }}">
+                    1주차 보상
                 </a>
+                {% else %}
+                <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission.mission_func', weeknumber=1) }}">
+                        1주차 미션
+                </a>  
+                    {% endif %}
+                {% if week1_approved %}
+                    {% if week2_approved %}
+                    <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission_complete.mission_complete_fun', weeknumber=2) }}">
+                    2주차 보상
+                    </a>
+                    {% else %}
+                    <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission.mission_func', weeknumber=2) }}">
+                    2주차 미션
+                    </a>
+                    {% endif %}
+                
                 {% else %}
                 <a class="block bg-gray-400 text-white px-4 py-2 rounded w-full text-center" href="#" onclick="return false;">2주차 미션</a>
                 {% endif %}
         
                 {% if week2_approved %}
-                <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission.mission_func', weeknumber=3) }}">
                     {% if week3_approved %}
+                    <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission_complete.mission_complete_fun', weeknumber=3) }}">
                     3주차 보상
+                    </a>
                     {% else %}
-                    3주차 미션
+                    <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission.mission_func', weeknumber=3) }}">
+                        3주차 미션
+                    </a>
                     {% endif %}
                 </a>
                 {% else %}
@@ -113,11 +120,14 @@
                 {% endif %}
         
                 {% if week3_approved %}
-                <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission.mission_func', weeknumber=4) }}">
                     {% if week4_approved %}
+                    <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission_complete.mission_final_complete_fun', weeknumber=4) }}">
                     4주차 보상
+                    </a>
                     {% else %}
-                    4주차 미션
+                    <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission.mission_func', weeknumber=4) }}">
+                        4주차 미션
+                    </a>
                     {% endif %}
                 </a>
                 {% else %}
@@ -156,3 +166,4 @@
     </body>
 
 </html>
+

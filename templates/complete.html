@@ -20,7 +20,7 @@
             <!-- Username and Logout Button -->
             <div class="absolute top-4 right-4 flex items-center">
                 <span class="text-xl mr-4">{{ username }}</span>
-                <a href="{{ url_for('logout') }}" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">로그아웃</a>
+                <a href="{{ url_for('login.login_func') }}" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">로그아웃</a>
             </div>
 
             <h3 class="text-2xl font-semibold mb-4">
@@ -31,16 +31,24 @@
                     <p>미션 완료!</p>
                     <p> 당신의 마니또에 대한 힌트는 {{ hint_weeknumber }} 입니다.</p>
                     <p>당신의 마니또가 보내는 응원 메시지 : 
-                        {% if weeknumber == 1 %}
-                        {{ message1 }}
-                        {% elif weeknumber == 2 %}
-                        {{ message2 }}
-                        {% elif weeknumber == 3 %}
-                        {{ message3 }}
+                        
+
+                        {% for message in messages %}
+
+                        {% if weeknumber == '1' %}
+                        {{ message.message1 }}
+                        
+                        {% elif weeknumber == '2' %}
+                        {{ message.message2 }}
+
+                        {% elif weeknumber == '3' %}
+                        {{ message.message3 }}
+
                         {% endif %}
+                        {% endfor %}
                     </p>
                     <div class="text-center">
-                        <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">돌아가기</button>
+                        <a href="{{ url_for('main.main_func') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">돌아가기</a>
                     </div>
                 </div>
             </div>

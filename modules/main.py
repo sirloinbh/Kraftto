@@ -12,10 +12,19 @@ person_i_help = random.choice(krafton_paticipants).split('.')
 
 main_bp = Blueprint('main', __name__)
 
+userdata = {
+    "username": "강철구"
+}
+
 
 @main_bp.route('/main', methods=['GET', 'POST'])
 def main_func():
-    user = db.user.find_one({"username": "강철구"})
+
+    user = db.user.find_one({"username": userdata['username']})
+    week1_approved = False
+    week2_approved = False
+    week3_approved = False
+    week4_approved = False
 
     if user['is_manitto'] == False:
         print("마니또가 아직 없습니다. 룰렛을 돌려주세요.")
@@ -27,11 +36,21 @@ def main_func():
         for user in users:
             print(user.get('person_i_help'))
 
-            if user.get('person_i_help') == '강철구':
-                db.user.update_one({"username": "강철구"}, {
+            if user.get('person_i_help') == userdata['username']:
+                db.user.update_one({"username": userdata['username']}, {
                                    "$set": {'person_i_got_help': "마찬옥"}})
 
-    return render_template('main.html', user=user)
+    if user:
+        week1_approved = bool(db.message.find_one(
+            {"username": userdata['username'], 'message1': {'$exists': True}, 'is_approved': True}))
+        week2_approved = bool(db.message.find_one(
+            {"username": userdata['username'], 'message2': {'$exists': True}, 'is_approved': True}))
+        week3_approved = bool(db.message.find_one(
+            {"username": userdata['username'], 'message3': {'$exists': True}, 'is_approved': True}))
+        week4_approved = bool(db.message.find_one(
+            {"username": userdata['username'], 'message4': {'$exists': True}, 'is_approved': True}))
+
+    return render_template('main.html', user=user, week1_approved=week1_approved, week2_approved=week2_approved, week3_approved=week3_approved, week4_approved=week4_approved)
 
 
 @main_bp.route('/main/roulette', methods=['GET', 'POST'])

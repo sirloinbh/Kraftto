@@ -20,7 +20,7 @@
             <!-- Username and Logout Button -->
             <div class="absolute top-4 right-4 flex items-center">
                 <span class="text-xl mr-4">{{ username }}</span>
-                <a href="{{ url_for('logout') }}" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">로그아웃</a>
+                <a href="{{ url_for('login.login_func') }}" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">로그아웃</a>
             </div>
 
             <h3 class="text-2xl font-semibold mb-4">
@@ -28,10 +28,26 @@
             </h3>
             <div class="border rounded p-4 mt-4">
                 <p>축하합니다! 모든 미션을 완료했습니다.</p>
-                <p> 당신의 마니또는 {{ person_i_got_help.person_i_got_help }} 입니다.</p>
-                <p>당신의 마니또가 보내는 응원 메시지 : {{ message.message4 }}</p>
+                <p> 당신의 마니또는 {{ person_i_got_help }} 입니다.</p>
+                <p>당신의 마니또가 보내는 응원 메시지 : 
+                    {% for message in messages %}
+
+                    {% if message.message1 %}
+                    1주차 응원메세지 : {{ message.message1 }}
+    
+                    {% elif  message.message2 %}
+                    2주차 응원메세지 : {{ message.message2 }}
+
+                    {% elif message.message3 %}
+                    3주차 응원메세지 : {{ message.message3 }}
+
+                    {% elif message.message4 %}
+                    4주차 응원메세지 : {{ message.message4 }}
+
+                    {% endif %}
+                    {% endfor %}</p>
                 <div class="text-center">
-                    <button class="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mx-auto">The end</button>
+                    <a href="{{ url_for('main.main_func') }}" class="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mx-auto">The end</a>
                 </div>
             </div>
         </div>
