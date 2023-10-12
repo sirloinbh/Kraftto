@@ -10,6 +10,9 @@
         <meta name="keywords" content="Jinja2, 서버사이드 렌더링, 웹 개발, 템플릿 엔진">
         <!-- Tailwind CSS CDN -->
         <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+        <!-- jQuery 를 포함합니다. -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     </head>
 
     <body class="bg-gray-100 h-screen flex flex-col justify-center items-center">
@@ -171,6 +174,11 @@
             function stopSpinning() {
                 spinning = false;
                 document.getElementById('spinButton').innerText = "돌리기";
+            }
+
+            function logout() {
+                $.removeCookie('mytoken', {path: '/'});
+                window.location.href = '/';
             }
         
             document.getElementById('spinButton').addEventListener('click', startSpinning);
