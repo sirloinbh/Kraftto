@@ -15,12 +15,7 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
-        <script>
-            function logout() {
-                $.removeCookie('mytoken', {path: '/'});
-                window.location.href = '/';
-            }
-        </script>
+
     </head>
     <body class="bg-gray-100 h-screen flex flex-col justify-center items-center">
 
@@ -30,16 +25,15 @@
 
             <!-- Username and Logout Button -->
             <div class="absolute top-4 right-4 flex items-center">
-                <span class="text-xl mr-4">{{ username }}</span>
-                <button href="logout()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">로그아웃</button>
+                <span class="text-xl mr-4">{{ user.username }}</span>
+                <button onclick="logout()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">로그아웃</button>
             </div>
 
             <h3 class="text-2xl font-semibold mb-4">
                 축하합니다! 모든 미션을 완료했습니다.
             </h3>
             <div class="border rounded p-4 mt-4">
-                <p>축하합니다! 모든 미션을 완료했습니다.</p>
-                <p> 당신의 마니또는 {{ person_i_got_help }}입니다!😊</p>
+                <p class = "text-xl mb-4 text-center"> 당신의 마니또는 {{ person_i_got_help }}입니다!😊</p>
                 <p>당신의 마니또가 보내는 지금까지 보낸 응원 메시지 : 
                     <ul>
                     {% for message in messages %}
@@ -66,5 +60,11 @@
             </div>
         </div>
 
+        <script>
+            function logout() {
+                $.removeCookie('mytoken', {path: '/'});
+                window.location.href = '/';
+            }
+        </script>
     </body>
 </html>
