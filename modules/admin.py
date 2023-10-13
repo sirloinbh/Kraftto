@@ -7,7 +7,7 @@ from modules.userdatas import krafton_paticipants
 import random
 from bson import ObjectId
 
-client = MongoClient('localhost', 27017)
+client = MongoClient('mongodb://sun:shine@13.209.47.134', 27017)
 db = client.kraftto
 admin_bp = Blueprint('admin', __name__)
 

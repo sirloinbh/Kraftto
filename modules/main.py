@@ -7,7 +7,7 @@ from modules.userdatas import krafton_paticipants
 import random
 
 
-client = MongoClient('localhost', 27017)
+client = MongoClient('mongodb://sun:shine@13.209.47.134', 27017)
 db = client.kraftto
 main_bp = Blueprint('main', __name__)
 
