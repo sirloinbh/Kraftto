@@ -109,8 +109,8 @@
     
                 <!-- 게이지 바 -->
                 <div class="border rounded p-4 mt-4">
-                    <p>미션완료 게이지</p>
-                    <div class="bg-gray-300 h-5 rounded-full mb-6">
+                    <p class = "mb-4">주어진 랜덤 미션을 완수하고 게이지를 채워나가세요!</p>
+                    <div class="bg-gray-300 h-10 rounded-full mb-6">
                         {% if week4_approved %}
                         <div class="h-full bg-blue-500 rounded-full w-full"></div>
                         {% elif week3_approved %}
@@ -124,7 +124,7 @@
                         {% endif %}
                     </div>
                     <!-- 퍼센트를 문자열로 표시 -->
-                    <p class="text-center">
+                    <p class="text-center text-xl">
                         {% if week4_approved %}
                         100%
                         {% elif week3_approved %}
@@ -140,7 +140,7 @@
                 </div>
             {% endif %}
 
-            <h3 class="text-2xl font-semibold mb-4">미션 확인</h3>
+            <h3 class="text-2xl font-semibold mb-4 mt-4">미션 확인</h3>
 
             <div class="border rounded p-4 mt-4 text-center space-y-4">
                 {% if week1_approved %}

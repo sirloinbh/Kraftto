@@ -30,8 +30,8 @@
 
             <!-- Username and Logout Button -->
             <div class="absolute top-4 right-4 flex items-center">
-                <span class="text-xl mr-4">{{ username }}</span>
-                <button href="logout()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">로그아웃</button>
+                <span class="text-xl mr-4">{{ user.username }}</span>
+                <button onclick="logout()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">로그아웃</button>
             </div>
 
             <h3 class="text-2xl font-semibold mb-4">
@@ -39,22 +39,22 @@
             </h3>
             <div >
                 <div class="border rounded p-4 mt-4">
-                    <p>미션 완료!</p>
+                    <p class = "mt-1 mb-1">미션 완료!</p>
                     
                         
                         {% for message in messages %}
                         {% if weeknumber == '1' and message.message1 %}
-                        <p>당신의 마니또에 대한 1주차 힌트 : 당신의 마니또는 {{ hints.OS }}💻을 사용합니다.🔥</p>
-                        <p>당신의 마니또가 보내는 사랑의 1주차 응원메시지 : 
+                        <p class = "mt-1 mb-1">당신의 마니또에 대한 1주차 힌트 : 당신의 마니또는 {{ hints.OS }}💻을 사용합니다.🔥</p>
+                        <p class = "mt-1 mb-1">당신의 마니또가 보내는 사랑의 1주차 응원메시지 : 
                         {{ message.message1 }}</p>
                         
                         {% elif weeknumber == '2' and message.message2 %}
-                        <p>당신의 마니또에 대한 2주차 힌트 : 당신의 마니또의 성별은 {{ hints.gender }}입니다.👍</p>
-                        <p>당신의 마니또가 보내는 2주차 응원 메시지 : {{ message.message2 }}</p>
+                        <p class = "mt-1 mb-1">당신의 마니또에 대한 2주차 힌트 : 당신의 마니또의 성별은 {{ hints.gender }}입니다.👍</p>
+                        <p class = "mt-1 mb-1">당신의 마니또가 보내는 2주차 응원 메시지 : {{ message.message2 }}</p>
 
                         {% elif weeknumber == '3' and message.message3 %}
-                        <p>당신의 마니또에 대한 3주차 힌트 : 당신의 마니또의 정글 번호는 {{ hints.junglenumber }}입니다.☕️</p>
-                        <p>당신의 마니또가 보내는 3주차 응원 메시지 : {{ message.message3 }}</p>
+                        <p class = "mt-1 mb-1">당신의 마니또에 대한 3주차 힌트 : 당신의 마니또의 정글 번호는 {{ hints.junglenumber }}입니다.☕️</p>
+                        <p class = "mt-1 mb-1">당신의 마니또가 보내는 3주차 응원 메시지 : {{ message.message3 }}</p>
                         {% endif %}
                         {% endfor %}
                     </p>
