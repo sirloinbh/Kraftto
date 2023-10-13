@@ -62,9 +62,5 @@ def insert_paticipants_db():
         paticipants = {
             'username': paticipant,
         }
-        print(paticipant)
 
         db.paticipants.insert_one(paticipants)
-
-
-insert_paticipants_db()

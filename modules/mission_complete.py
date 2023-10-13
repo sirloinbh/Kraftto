@@ -25,7 +25,8 @@ def mission_complete_fun():
 
         messages = list(db.message.find({'username': person_i_got_help}))
         hints = db.user.find_one({'username': person_i_got_help})
-        print(messages)
+        if messages == []:
+            messages = None
 
         return render_template("complete.html", user=user, weeknumber=weeknumber, messages=messages, hints=hints)
 
