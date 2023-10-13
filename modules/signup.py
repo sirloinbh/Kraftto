@@ -4,7 +4,7 @@ import re
 from flask import Flask, request, render_template, Blueprint, redirect, url_for
 from pymongo import MongoClient
 
-client = MongoClient('localhost', 27017)
+client = MongoClient('mongodb://sun:shine@13.209.47.134', 27017)
 db = client.kraftto
 signup_bp = Blueprint('signup', __name__)
 

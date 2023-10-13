@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 mission_bp = Blueprint('mission', __name__)
 
-client = MongoClient('localhost', 27017)
+client = MongoClient('mongodb://sun:shine@13.209.47.134', 27017)
 db = client.kraftto
 random_int = random.randint(1, 16)
 

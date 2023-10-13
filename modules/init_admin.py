@@ -2,7 +2,7 @@ import hashlib
 
 from pymongo import MongoClient
 
-client = MongoClient('localhost', 27017)
+client = MongoClient('mongodb://sun:shine@13.209.47.134', 27017)
 db = client.kraftto
 
 db.user.insert_one({'username': 'admin', 'email': 'admin', 'password': hashlib.sha256('a'.encode('utf-8')).hexdigest(),

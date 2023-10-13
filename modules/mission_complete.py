@@ -4,7 +4,7 @@ from pymongo import MongoClient
 from modules.userdatas import krafton_paticipants
 from modules.login import SECRET_KEY
 
-client = MongoClient('localhost', 27017)
+client = MongoClient('mongodb://sun:shine@13.209.47.134', 27017)
 db = client.kraftto
 
 mission_complete_bp = Blueprint('mission_complete', __name__)
