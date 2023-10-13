@@ -23,7 +23,6 @@ def mission_func():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user = db.user.find_one({"email": payload["email"]})
-        is_current_mission = False
 
         if request.method == "POST":
             message = {
@@ -56,12 +55,10 @@ def mission_rullet_func():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user = db.user.find_one({"email": payload["email"]})
 
-        print(request.form.get('selectedmission'))
         db.user.update_one({'username': user['username']}, {
                            '$set': {'current_mission': request.form.get('selectedmission')}})
 
-        # return redirect(url_for('main.main_func'))
-        return render_template('main.html', user=user)
+        return render_template('mission.html', user=user)
 
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login.login_func", msg="로그인 시간이 만료되었습니다."))
