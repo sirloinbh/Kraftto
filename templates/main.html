@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            Login
+        </title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="이 페이지는 Jinja2와 서버사이드 렌더링에 대한 정보를 제공합니다.">
+        <meta name="keywords" content="Jinja2, 서버사이드 렌더링, 웹 개발, 템플릿 엔진">
+        <!-- Tailwind CSS CDN -->
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+        <!-- jQuery 를 포함합니다. -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+        <style>
+            .modal {
+                /* Removed the background color */
+                position: fixed;
+                top: 0; right: 0; bottom: 0; left: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 5px;
+                box-shadow: 1px 1px gray;
+            }
+            
+            .modal-content {
+                background: white;
+                padding: 40px; /* Increased the padding to make the modal larger */
+                border-radius: 5px;
+            }
+            
+            .hidden {
+                display: none;
+            }
+            
+            .slot-machine {
+                border: 1px solid lightgray;
+                height: 50px;
+                overflow: hidden;
+                border-radius: 3px;
+            }
+            
+            .slot-values {
+                display: flex;
+                flex-direction: column;
+                transform: translateY(0);
+            }
+            
+            .value {
+                height: 50px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            
+        </style>
+
+        
+    </head>
+
+    <body class="bg-gray-100 h-screen flex flex-col justify-center items-center">
+
+        <h1 class="text-4xl font-bold mb-4">KRAFTTO</h1>
+
+        <div class="bg-white p-8 rounded-lg shadow-md w-1/2 relative">
+
+            <!-- Username and Logout Button -->
+            <div class="absolute top-4 right-4 flex items-center">
+                <span class="text-xl mr-4">{{ user.username }}</span>
+                <button onclick="logout()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">로그아웃</button>
+            </div>
+
+            {% if user.is_manitto == false %}
+            <h3 class="text-2xl font-semibold mb-4">
+                당신은 아직 마니또가 아닙니다. 룰렛을 돌려주세요.
+            </h3>
+            <div class="border rounded p-4 mt-4 flex justify-center items-center">
+                <button id="openModal" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 btn-open">룰렛 돌리기</button>
+            </div>
+            
+
+            <div class="app">
+                <!-- 모달창 -->
+                <div id="modal" class="modal fixed inset-0 flex items-center justify-center p-4 hidden">
+                    <div class="modal-content bg-white p-8 rounded-lg shadow-md w-1/2 flex flex-col">
+                        <p>start를 누르면 당신이 도움을 줄 정글러가 랜덤으로 정해집니다.
+                        <!-- 슬롯 머신 -->
+                        <div class="slot-machine">
+                            <div class="slot-window ">
+                                <div class="slot-values">
+                                    {% for participant in participants %}
+                                        <div class="value">{{ participant.username }}</div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 시작 및 닫기 버튼 -->
+                        <button id="startSlot" class="btn-start mt-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mx-auto">Start</button>
+                        <a href="closeModal" id="closeModal" class="btn-close mt-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mx-auto">Close</a>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <h3 class="text-2xl font-semibold mb-4">
+                당신은 {{ user.person_i_help }}의 마니또입니다.
+            </h3>
+    
+                <!-- 게이지 바 -->
+                <div class="border rounded p-4 mt-4">
+                    <p class = "mb-4">주어진 랜덤 미션을 완수하고 게이지를 채워나가세요!</p>
+                    <div class="bg-gray-300 h-10 rounded-full mb-6">
+                        {% if week4_approved %}
+                        <div class="h-full bg-blue-500 rounded-full w-full"></div>
+                        {% elif week3_approved %}
+                        <div class="h-full bg-blue-500 rounded-full w-3/4"></div>
+                        {% elif week2_approved %}
+                        <div class="h-full bg-blue-500 rounded-full w-1/2"></div>
+                        {% elif week1_approved %}
+                        <div class="h-full bg-blue-500 rounded-full w-1/4"></div>
+                        {% else %}
+                        <div class="h-full bg-blue-500 rounded-full w-0"></div>
+                        {% endif %}
+                    </div>
+                    <!-- 퍼센트를 문자열로 표시 -->
+                    <p class="text-center text-xl">
+                        {% if week4_approved %}
+                        100%
+                        {% elif week3_approved %}
+                        75%
+                        {% elif week2_approved %}
+                        50%
+                        {% elif week1_approved %}
+                        25%
+                        {% else %}
+                        0%
+                        {% endif %}
+                    </p>
+                </div>
+            {% endif %}
+
+            <h3 class="text-2xl font-semibold mb-4 mt-4">미션 확인</h3>
+
+            <div class="border rounded p-4 mt-4 text-center space-y-4">
+                {% if week1_approved %}
+                <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission_complete.mission_complete_fun', weeknumber=1) }}">
+                    1주차 보상
+                </a>
+                {% else %}
+                <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission.mission_func', weeknumber=1) }}">
+                        1주차 미션
+                </a>  
+                    {% endif %}
+                {% if week1_approved %}
+                    {% if week2_approved %}
+                    <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission_complete.mission_complete_fun', weeknumber=2) }}">
+                    2주차 보상
+                    </a>
+                    {% else %}
+                    <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission.mission_func', weeknumber=2) }}">
+                    2주차 미션
+                    </a>
+                    {% endif %}
+                
+                {% else %}
+                <a class="block bg-gray-400 text-white px-4 py-2 rounded w-full text-center" href="#" onclick="return false;">2주차 미션</a>
+                {% endif %}
+        
+                {% if week2_approved %}
+                    {% if week3_approved %}
+                    <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission_complete.mission_complete_fun', weeknumber=3) }}">
+                    3주차 보상
+                    </a>
+                    {% else %}
+                    <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission.mission_func', weeknumber=3) }}">
+                        3주차 미션
+                    </a>
+                    {% endif %}
+                </a>
+                {% else %}
+                <a class="block bg-gray-400 text-white px-4 py-2 rounded w-full text-center" href="#" onclick="return false;">3주차 미션</a>
+                {% endif %}
+        
+                {% if week3_approved %}
+                    {% if week4_approved %}
+                    <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission_complete.mission_final_complete_fun', weeknumber=4) }}">
+                    4주차 보상
+                    </a>
+                    {% else %}
+                    <a class="block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full text-center" href="{{ url_for('mission.mission_func', weeknumber=4) }}">
+                        4주차 미션
+                    </a>
+                    {% endif %}
+                </a>
+                {% else %}
+                <a class="block bg-gray-400 text-white px-4 py-2 rounded w-full text-center" href="#" onclick="return false;">4주차 미션</a>
+                {% endif %}
+            </div>
+        </div>
+        <script>
+            function logout() {
+                $.removeCookie('mytoken', {path: '/'});
+                window.location.href = '/';
+            }
+        
+            $(document).ready(function() {
+                var isSpinning = false;
+                var spinInterval;
+                var selectedperson;
+                var participantCount = $(".value").length; // Get the number of participants
+                var totalHeight = participantCount * 50; // Calculate total height
+            
+                $("#openModal").click(function() {
+                    $("#modal").removeClass("hidden");
+                });
+            
+                $("#closeModal").click(function() {
+                    $("#modal").addClass("hidden");
+                });
+            
+                $("#startSlot").click(function() {
+                    if (!isSpinning) {
+                        isSpinning = true;
+                        let rotations = 0; // Keep track of how many times the slot has rotated
+                        let stoppingPosition; // Declare the stoppingPosition here
+            
+                        spinInterval = setInterval(function() {
+                            var y = parseInt($(".slot-values").css("transform").split(",")[5]);
+                            y -= 50;
+                            if (y <= -totalHeight) {
+                                y = 0;
+                                rotations++; // Increment rotations count
+                            }
+                            $(".slot-values").css("transform", "translateY(" + y + "px)");
+                        }, 17);
+            
+                        setTimeout(function() {
+                            clearInterval(spinInterval);
+                            isSpinning = false;
+            
+                            // Calculate the exact stopping position based on rotations
+                            stoppingPosition = rotations * totalHeight + Math.floor(Math.random() * participantCount) * 50;
+                            $(".slot-values").css("transform", "translateY(-" + stoppingPosition + "px)");
+            
+                            let index = stoppingPosition / 50 % participantCount;
+                            selectedperson = $(".value").eq(index).text();
+                            console.log("selectedperson (before sending to server):", selectedperson); // Log the selected person before sending
+            
+                            $.ajax({
+                                type: 'POST',
+                                url: '/main',
+                                data: { selectedperson: selectedperson },
+                                success: function(response) {
+                                    // Temporarily comment out the page reload to see the logs
+                                    window.location.reload();
+                                },
+                                error: function(err) {
+                                    console.error("Error from server:", err); // Log any errors
+                                }
+                            });
+            
+                        }, Math.random() * 5000 + 2000);
+                    }
+                });
+            });
+        </script>
+    </body>
+
+</html>
+

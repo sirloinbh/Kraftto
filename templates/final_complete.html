@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            Login
+        </title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="이 페이지는 Jinja2와 서버사이드 렌더링에 대한 정보를 제공합니다.">
+        <meta name="keywords" content="Jinja2, 서버사이드 렌더링, 웹 개발, 템플릿 엔진">
+        <!-- Tailwind CSS CDN -->
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+        <!-- jQuery 를 포함합니다. -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+
+    </head>
+    <body class="bg-gray-100 h-screen flex flex-col justify-center items-center">
+
+        <h1 class="text-4xl font-bold mb-4">KRAFTTO</h1>
+
+        <div class="bg-white p-8 rounded-lg shadow-md w-1/2 relative">
+
+            <!-- Username and Logout Button -->
+            <div class="absolute top-4 right-4 flex items-center">
+                <span class="text-xl mr-4">{{ user.username }}</span>
+                <button onclick="logout()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">로그아웃</button>
+            </div>
+
+            <h3 class="text-2xl font-semibold mb-4">
+                축하합니다! 모든 미션을 완료했습니다.
+            </h3>
+            <div class="border rounded p-4 mt-4">
+                <p class = "text-xl mb-4 text-center"> 당신의 마니또는 {{ person_i_got_help }}입니다!😊</p>
+                <p>당신의 마니또가 보내는 지금까지 보낸 응원 메시지 : 
+                    <ul>
+                    {% for message in messages %}
+
+                    {% if message.message1 %}
+                    <li>1주차 응원메세지 : {{ message.message1 }}</li>
+    
+                    {% elif  message.message2 %}
+                    <li>2주차 응원메세지 : {{ message.message2 }}</li>
+
+                    {% elif message.message3 %}
+                    <li>3주차 응원메세지 : {{ message.message3 }}</li>
+
+                    {% elif message.message4 %}
+                    <li>4주차 응원메세지 : {{ message.message4 }}</li>
+
+                    {% endif %}
+                    {% endfor %}
+                    </ul>
+                </p>
+                <div class="text-center">
+                    <a href="{{ url_for('main.main_func') }}" class="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mx-auto">The end</a>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function logout() {
+                $.removeCookie('mytoken', {path: '/'});
+                window.location.href = '/';
+            }
+        </script>
+    </body>
+</html>

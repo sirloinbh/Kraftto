@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>
+        Login
+    </title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="이 페이지는 Jinja2와 서버사이드 렌더링에 대한 정보를 제공합니다.">
+    <meta name="keywords" content="Jinja2, 서버사이드 렌더링, 웹 개발, 템플릿 엔진">
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <!-- jQuery 를 포함합니다. -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <style>
+        .modal {
+            /* Removed the background color */
+            position: fixed;
+            top: 0; right: 0; bottom: 0; left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+            box-shadow: 1px 1px gray;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 40px; /* Increased the padding to make the modal larger */
+            border-radius: 5px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .slot-machine {
+            border: 1px solid lightgray;
+            height: 50px;
+            overflow: hidden;
+            border-radius: 3px;
+        }
+        
+        .slot-values {
+            display: flex;
+            flex-direction: column;
+            transform: translateY(0);
+        }
+        
+        .value {
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+
+</head>
+
+<body class="bg-gray-100 h-screen flex flex-col justify-center items-center">
+
+    <h1 class="text-4xl font-bold mb-4">KRAFTTO</h1>
+
+    <div class="bg-white p-8 rounded-lg shadow-md w-1/2 relative">
+
+        <!-- Username and Logout Button -->
+        <div class="absolute top-4 right-4 flex items-center">
+            <span class="text-xl mr-4">{{ user.username }}</span>
+            <a onclick="logout()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">로그아웃</a>
+        </div>
+
+        <h3 class="text-2xl font-semibold mb-4">
+            WEEK_{{ weeknumber }} MISSION
+        </h3>
+        <div class="border rounded p-4 mt-4">
+
+            
+            <div>
+                <p>16개의 미션 중 랜덤 1개가 배정됩니다!</p>
+                {% if user.current_mission == "" %}
+                <div class="border rounded p-4 mt-4 flex justify-center items-center">
+                    <button id="openModal" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 btn-open">룰렛 돌리기</button>
+                </div>
+                <div class="app">
+                    <!-- 모달창 -->
+                    <div id="modal" class="modal fixed inset-0 flex items-center justify-center p-4 hidden">
+                        <div class="modal-content bg-white p-8 rounded-lg shadow-md w-1/2 flex flex-col">
+                            <p class = "mb-4">start를 누르면 당신의 마니또 미션이 선택됩니다.
+                            <!-- 슬롯 머신 -->
+                            <div class="slot-machine">
+                                <div class="slot-window ">
+                                    <div class="slot-values">
+                                        {% for random_mission in random_missions %}
+                                            <div class="value">{{ random_mission }}</div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 시작 및 닫기 버튼 -->
+                            <button id="startSlot" class="btn-start mt-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mx-auto">Start</button>
+                            <button id="closeModal" class="btn-close mt-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mx-auto">Close</button>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="border rounded p-4 mt-4 flex justify-center items-center">
+                    <p> {{ user.current_mission }}</p>
+                </div>
+                {% endif %}
+                
+                <p class = "mt-4">미션을 완수한 후 응원의 메시지와 함께 미션 인증 버튼을 눌러주세요</p>
+            </div>
+            <div class="text-center mt-4">
+                <form id="missionForm" method="post" class="flex justify-center items-center space-x-4">
+                    <input type="text" name="message" placeholder="응원의 메시지를 입력해주세요" required class="w-1/2 p-2 border rounded">
+                    <button type="button" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" onclick="sendMissionData(); openModal();">미션인증</button>
+                    <!-- 모달 창 -->
+                    <div id="myModal" class="fixed inset-0 flex items-center justify-center p-4 hidden">
+                    <div class="bg-white p-8 rounded-lg shadow-md w-1/2 flex flex-col">
+                        <h3 class="text-2xl font-semibold mb-4">인증 대기</h3>
+                            <div class="border rounded p-4 mt-4 flex-grow">
+                                <p class="mb-4">응원 메시지 등록이 완료되었습니다.</p>
+                                <p class="mb-4">관리자의 승인을 기다리세요.</p>
+                                <div class="text-center">
+                                    <button onclick="closeModal()" class="mt-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mx-auto">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById('myModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('myModal').style.display = 'none';
+        }
+
+        function logout() {
+            $.removeCookie('mytoken', {path: '/'});
+            window.location.href = '/';
+        }
+
+
+        function sendMissionData() {
+            var formData = new FormData($("#missionForm")[0]);
+        
+            $.ajax({
+                type: 'POST',
+                url: '/mission/upload',  // 백엔드 엔드포인트를 지정합니다.
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    console.log("성공");
+                    // 성공적인 POST 요청 후 원하는 작업을 수행합니다.
+                },
+                error: function(err) {
+                    console.error(err);
+                }
+            });
+        }
+    
+        $(document).ready(function() {
+            var isSpinning = false;
+            var spinInterval;
+            var selectedmission;
+
+            $("#openModal").click(function() {
+                $("#modal").removeClass("hidden");
+            });
+
+            $("#closeModal").click(function() {
+                $("#modal").addClass("hidden");
+            });
+
+            $("#startSlot").click(function() {
+                if (!isSpinning) {
+                    isSpinning = true;
+                    spinInterval = setInterval(function() {
+                        var y = parseInt($(".slot-values").css("transform").split(",")[5]);
+                        y -= 50;
+                        if (y <= -800) y = 0; // 16 values * 50px each = 800px
+                        $(".slot-values").css("transform", "translateY(" + y + "px)");
+                    }, 50);
+
+                    setTimeout(function() {
+                        clearInterval(spinInterval);
+                        isSpinning = false;
+
+                        var y = Math.abs(parseInt($(".slot-values").css("transform").split(",")[5]));
+                        var index = (y / 50) % 16;
+                        selectedmission = $(".value").eq(index).text();
+                        console.log("selectedmission :", selectedmission);
+                        
+                        $.ajax({
+                            type: 'POST',
+                            url: '/mission/rullet',
+                            data: { selectedmission: selectedmission },
+                            success: function(response) {
+                                console.log("성공");
+                                // Redirect to the /mission route after a successful POST request
+                                window.location.reload()
+                            },
+                            error: function(err) {
+                                // Handle any errors
+                                console.error(err);
+                            }
+                        });
+                    }, Math.random() * 5000 + 2000);
+
+                    
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

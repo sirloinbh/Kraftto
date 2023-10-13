@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>KRAFTTO main page</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="이 페이지는 Jinja2와 서버사이드 렌더링에 대한 정보를 제공합니다.">
+        <meta name="keywords" content="Jinja2, 서버사이드 렌더링, 웹 개발, 템플릿 엔진">
+        <!-- Tailwind CSS CDN -->
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    </head>
+    <body class="bg-gray-100 h-screen flex flex-col justify-center items-center">
+
+        <h1 class="text-4xl font-bold mb-4">KRAFTTO</h1>
+
+        <div class="bg-white p-8 rounded-lg shadow-md w-1/2">
+            <h3 class="text-2xl font-semibold mb-4">크래프톤 정글 마니또 게임</h3>
+            
+            <div class="border rounded p-4 mt-4">
+                       
+                <div class="mt-4">
+                    
+                    <h5 class="text-xl mb-4 text-center">마니또가 되어 도움을 주고 </h5>
+                    <h5 class="text-xl mb-4 text-center">당신의 마니또를 찾아보세요!</h5>
+                    <div class="text-center">
+
+                        <a id="rule-btn" onclick="openModal()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">RULE</a>
+                        <a href="{{ url_for('login.login_func') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">START</a>
+
+                    </div>
+                    
+                </div>
+                
+            </div>
+            <p class="mt-6 text-gray-600 text-right">Created by. Team3 마찬옥, 김진규, 김병현</p>
+        </div>
+
+        <!-- 모달 창 -->
+        <div id="modal" class="fixed inset-0 flex items-center justify-center p-4 hidden">
+            <div class="bg-white p-8 rounded-lg shadow-md w-1/2 flex flex-col">
+                <h3 class="text-2xl font-semibold mb-4">크래프또 설명</h3>
+                <div class="border rounded p-4 mt-4 flex-grow">
+                    <ul class="list-disc pl-5 mb-4">
+                        <li class="mb-2">당신은 누군가의 마니또가 됩니다. 마니또인걸 들키지 않고 도움을 주세요 </li>
+                        <li class="mb-2">당신을 돕는 마니또가 존재합니다. 그 사람을 찾아보세요</li>
+                        <li class="mb-2">매주 마니또 미션이 주어집니다 미션을 완수하면 당신의 마니또에 대한 힌트가 주어집니다.</li>
+                    </ul>
+                </div>
+                <button id="close-btn" class="mt-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mx-auto" onclick="closeModal()" >Close</button>
+            </div>
+        </div>
+        <!-- JavaScript -->
+        <script>
+            function openModal() {
+                document.getElementById('modal').style.display = 'flex';
+            }
+        
+            function closeModal() {
+                document.getElementById('modal').style.display = 'none';
+            }
+        
+            // "RULE" 버튼에 클릭 이벤트 연결
+            document.getElementById('rule-btn').addEventListener('click', openModal);
+            // "Close" 버튼에 클릭 이벤트 연결
+            document.getElementById('close-btn').addEventListener('click', closeModal);
+        </script>
+    </body>
+
+
+</html>

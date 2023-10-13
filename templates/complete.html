@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            Login
+        </title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="이 페이지는 Jinja2와 서버사이드 렌더링에 대한 정보를 제공합니다.">
+        <meta name="keywords" content="Jinja2, 서버사이드 렌더링, 웹 개발, 템플릿 엔진">
+        <!-- Tailwind CSS CDN -->
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+        <!-- jQuery 를 포함합니다. -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+
+    </head>
+    <body class="bg-gray-100 h-screen flex flex-col justify-center items-center">
+
+        <h1 class="text-4xl font-bold mb-4">KRAFTTO</h1>
+
+        <div class="bg-white p-8 rounded-lg shadow-md w-1/2 relative">
+
+            <!-- Username and Logout Button -->
+            <div class="absolute top-4 right-4 flex items-center">
+                <span class="text-xl mr-4">{{ user.username }}</span>
+                <button onclick="logout()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">로그아웃</button>
+            </div>
+
+            <h3 class="text-2xl font-semibold mb-4">
+                WEEK_{{ weeknumber }}  MISSION
+            </h3>
+            <div >
+                <div class="border rounded p-4 mt-4">
+
+                    <p class = "mt-2 mb-2">미션 완료!</p>
+                        {% if messages == None %}
+                        <p>아직 당신의 마니또가 남긴 메세지가 없습니다. 잠시만 기다려주세요!🙏</p>
+                        
+                        {% else %}
+         
+                        {% if user.person_i_got_help != ''%}
+                        
+                        {% for message in messages %}
+                        {% if weeknumber == '1' and message.message1 %}
+                        <p class = "mt-2 mb-2">당신의 마니또에 대한 1주차 힌트 : 당신의 마니또는 {{ hints.OS }}💻을 사용합니다.🔥</p>
+                        <p class = "mt-2 mb-2">당신의 마니또가 보내는 사랑의 1주차 응원메시지 : 
+                        {{ message.message1 }}</p>
+                        
+                        {% elif weeknumber == '2' and message.message2 %}
+                        <p class = "mt-2 mb-2">당신의 마니또에 대한 2주차 힌트 : 당신의 마니또의 성별은 {{ hints.gender }}입니다.👍</p>
+                        <p class = "mt-2 mb-2">당신의 마니또가 보내는 2주차 응원 메시지 : {{ message.message2 }}</p>
+
+                        {% elif weeknumber == '3' and message.message3 %}
+                        <p class = "mt-2 mb-2">당신의 마니또에 대한 3주차 힌트 : 당신의 마니또의 정글 번호는 {{ hints.junglenumber }}입니다.☕️</p>
+                        <p class = "mt-2 mb-2">당신의 마니또가 보내는 3주차 응원 메시지 : {{ message.message3 }}</p>
+                        {% endif %}
+                        {% endfor %}
+
+
+                        {% else %}
+                        <p>아직 당신은 아직 마니또가 없습니다. 잠시만 기다려주세요!🙏</p>
+                        {% endif %}
+                        {% endif %}
+
+                    <div class="text-center mt-4">
+                        <a href="{{ url_for('main.main_func') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">돌아가기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function logout() {
+                $.removeCookie('mytoken', {path: '/'});
+                window.location.href = '/';
+            }
+        </script>
+    </body>
+</html>

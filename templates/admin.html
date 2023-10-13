@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>관리자 페이지</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <!-- jQuery 를 포함합니다. -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+    <script>
+        function logout() {
+            $.removeCookie('mytoken', {path: '/'});
+            window.location.href = '/';
+        }
+    </script>
+</head>
+
+<body class="bg-gray-100 h-screen flex flex-col justify-center items-center">
+
+    <h1 class="text-4xl font-bold mb-4">KRAFTTO</h1>
+
+    <div class="bg-white p-8 rounded-lg shadow-md w-1/2 relative">
+
+        <!-- Username and Logout Button -->
+        <div class="absolute top-4 right-4 flex items-center">
+            <span class="text-xl mr-4">{{ user.username }}</span>
+            <button onclick="logout()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">로그아웃</button>
+        </div>
+
+        <h3 class="text-2xl font-semibold mt-4 mb-4">관리자 페이지</h3>
+
+        {% for message in messages %}
+        <div class="border rounded p-4 mt-4 flex items-center justify-between">
+            <div class="w-3/4">
+                
+
+                <div class="bg-white p-8 rounded-lg shadow-md">
+                    <!-- Check if 'message1' exists in the current message dictionary and display it -->
+                    {% if 'message1' in message %}
+                    <div class="flex items-center justify-between mb-4">
+                        <h5 class="mb-4">{{ message.username }}의 1주차 응원메세지: {{ message.message1 }}</h5>
+                    </div>
+                    {% endif %}
+
+                    <!-- Check if 'message2' exists in the current message dictionary and display it -->
+                    {% if 'message2' in message %}
+                    <div class="flex items-center justify-between mb-4">
+                        <h5 class="mb-4">{{ message.username }}의 2주차 응원메세지: {{ message.message2 }}</h5>
+                    </div>
+                    {% endif %}
+
+                    <!-- Check if 'message3' exists in the current message dictionary and display it -->
+                    {% if 'message3' in message %}
+                    <div class="flex items-center justify-between mb-4">
+                        <h5 class="mb-4">{{ message.username }}의 3주차 응원메세지: {{ message.message3 }}</h5>
+                    </div>
+                    {% endif %}
+
+                    <!-- Check if 'message4' exists in the current message dictionary and display it -->
+                    {% if 'message4' in message %}
+                    <div class="flex items-center justify-between mb-4">
+                        <h5 class="mb-4">{{ message.username }}의 4주차 응원메세지: {{ message.message4 }}</h5>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <a href="{{ url_for('admin.admin_approve', _id=message._id) }}" class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600">미션 인증</a>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+
+</html>
