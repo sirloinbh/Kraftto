@@ -7,7 +7,7 @@ from pymongo import MongoClient
 
 SECRET_KEY = 'secrete key'
 
-client = MongoClient('localhost', 27017)
+client = MongoClient('mongodb://sun:shine@13.209.47.134', 27017)
 db = client.kraftto
 
 login_bp = Blueprint('login', __name__)
