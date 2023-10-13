@@ -27,7 +27,7 @@ def mission_complete_fun():
         hints = db.user.find_one({'username': person_i_got_help})
         print(messages)
 
-        return render_template("complete.html", weeknumber=weeknumber, messages=messages, hints=hints)
+        return render_template("complete.html", user=user, weeknumber=weeknumber, messages=messages, hints=hints)
 
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login.login_func", msg="로그인 시간이 만료되었습니다."))

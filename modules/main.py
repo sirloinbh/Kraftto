@@ -9,15 +9,7 @@ import random
 
 client = MongoClient('localhost', 27017)
 db = client.kraftto
-
-person_i_help = random.choice(krafton_paticipants).split('.')
-
-
 main_bp = Blueprint('main', __name__)
-
-userdata = {
-    "username": "강철구"
-}
 
 
 @main_bp.route('/main', methods=['GET'])
@@ -27,6 +19,7 @@ def main_func():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user = db.user.find_one({"email": payload["email"]})
+        krafton_paticipants = list(db.paticipants.find())
 
         week1_approved = False
         week2_approved = False
@@ -73,6 +66,8 @@ def roulette_func():
                            '$set': {'is_manitto': True}})
         db.user.update_one({'username': user['username']}, {
                            '$set': {'person_i_help': request.form.get('selectedperson').split('.')[1]}})
+        db.paticipants.delete_one(
+            {'username': request.form.get('selectedperson')})
 
         return render_template('main.html', user=user)
 
