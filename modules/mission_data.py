@@ -26,6 +26,3 @@ def insert_mission_db():
     for mission in weekly_missions.items():
         db.mission.insert_one(
             {'mission': mission[0], "description": mission[1]})
-
-
-insert_mission_db()

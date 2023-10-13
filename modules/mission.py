@@ -31,7 +31,6 @@ def mission_func():
                 "is_approved": False,
             }
             db.message.insert_one(message)
-            print("생성")
             return redirect(url_for('main.main_func'))
 
         missions_lists = list(db.mission.find())
