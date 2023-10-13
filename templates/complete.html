@@ -35,12 +35,12 @@
             <div >
                 <div class="border rounded p-4 mt-4">
 
-                    <p>미션 완료!</p>
+                    <p class = "mt-2 mb-2">미션 완료!</p>
                         {% if messages == None %}
                         <p>아직 당신의 마니또가 남긴 메세지가 없습니다. 잠시만 기다려주세요!🙏</p>
                         
                         {% else %}
-                        <p class = "mt-2 mb-2">미션 완료!</p>
+         
                         {% if user.person_i_got_help != ''%}
                         
                         {% for message in messages %}
