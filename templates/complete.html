@@ -36,7 +36,8 @@
                 <div class="border rounded p-4 mt-4">
                     <p class = "mt-1 mb-1">미션 완료!</p>
                     
-                        
+                        {% if user.person_i_got_help != '' %}
+
                         {% for message in messages %}
                         {% if weeknumber == '1' and message.message1 %}
                         <p class = "mt-2 mb-2">당신의 마니또에 대한 1주차 힌트 : 당신의 마니또는 {{ hints.OS }}💻을 사용합니다.🔥</p>
@@ -52,9 +53,16 @@
                         <p class = "mt-2 mb-2">당신의 마니또가 보내는 3주차 응원 메시지 : {{ message.message3 }}</p>
                         {% endif %}
                         {% endfor %}
-                    </p>
+
+
+                        {% else %}
+                        <p>당신의 마니또가 아직 없어요.🥲 매칭 후 알려드릴게요!🙏</p>
+
+
+                        {% endif %}
+
                     <div class="text-center mt-4">
-                        <a href="{{ url_for('main.main_func') }}" class="bg-blue-500 text-white  px-4 py-2  rounded hover:bg-blue-600">돌아가기</a>
+                        <a href="{{ url_for('main.main_func') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">돌아가기</a>
                     </div>
                 </div>
             </div>

@@ -17,6 +17,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
 
+
     </head>
     <body class="bg-gray-100 h-screen flex flex-col justify-center items-center">
 
@@ -56,6 +57,31 @@
 
                             alert('로그인 완료!')
                             alert(response['email'])
+                            if (response['email'] == 'admin') {
+                                window.location.replace("/admin")
+                            } else {
+                                window.location.replace("/main")
+                            }
+                        } else {
+                            alert(response['msg'])
+                        }
+                    },
+                });
+            }
+        </script>
+        <script>
+            function login() {
+                $.ajax({
+                    type: "POST",
+                    url: "/login",
+                    data: { 
+                        'email': $('#email').val(),
+                        'password': $('#password').val()
+                    },
+                    success: function (response) {
+                        if (response['result'] == 'success') {
+                            $.cookie('mytoken', response['token'], { expires: 7, path:'/'});
+
                             if (response['email'] == 'admin') {
                                 window.location.replace("/admin")
                             } else {

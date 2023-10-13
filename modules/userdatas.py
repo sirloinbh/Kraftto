@@ -1,3 +1,7 @@
+from pymongo import MongoClient
+client = MongoClient('localhost', 27017)
+db = client.kraftto
+
 krafton_paticipants = [
     "01.강철구",
     "02.김병철",
@@ -51,3 +55,16 @@ krafton_paticipants = [
     "50.천지영",
     "51.현재훈",
 ]
+
+
+def insert_paticipants_db():
+    for paticipant in krafton_paticipants:
+        paticipants = {
+            'username': paticipant,
+        }
+        print(paticipant)
+
+        db.paticipants.insert_one(paticipants)
+
+
+insert_paticipants_db()
