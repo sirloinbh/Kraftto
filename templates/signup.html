@@ -11,31 +11,7 @@
         <!-- Tailwind CSS CDN -->
         <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     </head>
-    <script>
-        function register() {
-        $.ajax({
-            type: "POST",
-            url: "/signup",
-            data: {
-                email: $('#email').val(),
-                password: $('#password').val(),
-                username: $('#username').val(),
-                passwordConfirm: $('#passwordConfirm').val(),
-                OS: $('#OS').val(),
-                gender: $('#gender').val(),
-                junglenumber: $('#junglenumber').val(),
-            },
-            success: function (response) {
-                if (response['result'] == 'success') {
-                    alert('회원가입이 완료되었습니다.')
-                    window.location.href = '/login'
-                } else {
-                    alert(response['msg'])
-                }
-            }
-        })
-    }
-    </script>
+
     <body class="bg-gray-100 h-screen flex flex-col justify-center items-center">
 
         <h1 class="text-4xl font-bold mb-4">KRAFTTO</h1>
@@ -108,5 +84,30 @@
                 <p class="mt-4 text-gray-600 text-right">Already have an account? <a href="{{ url_for('login.login_func') }}" class="text-blue-500">Login</a></p>
             </div>
         </div>
+        <script>
+            function register() {
+            $.ajax({
+                type: "POST",
+                url: "/signup",
+                data: {
+                    email: $('#email').val(),
+                    password: $('#password').val(),
+                    username: $('#username').val(),
+                    passwordConfirm: $('#passwordConfirm').val(),
+                    OS: $('#OS').val(),
+                    gender: $('#gender').val(),
+                    junglenumber: $('#junglenumber').val(),
+                },
+                success: function (response) {
+                    if (response['result'] == 'success') {
+                        alert('회원가입이 완료되었습니다.')
+                        window.location.href = '/login'
+                    } else {
+                        alert(response['msg'])
+                    }
+                }
+            })
+        }
+        </script>
     </body>
 </html>

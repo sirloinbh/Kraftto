@@ -16,30 +16,7 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
-        <script>
-            function login() {
-                $.ajax({
-                    type: "POST",
-                    url: "/login",
-                    data: { 'email': $('#email').val(), 'password': $('#password').val()},
-                    success: function (response) {
-                        if (response['result'] == 'success') {
-                            $.cookie('mytoken', response['token'], { expires: 7, path:'/'});
 
-                            alert('로그인 완료!')
-                            alert(response['email'])
-                            if (response['email'] == 'admin') {
-                                window.location.replace("/admin")
-                            } else {
-                                window.location.replace("/main")
-                            }
-                        } else {
-                            alert(response['msg'])
-                        }
-                    },
-                });
-            }
-        </script>
     </head>
     <body class="bg-gray-100 h-screen flex flex-col justify-center items-center">
 
@@ -67,6 +44,30 @@
             <p class="mt-4 text-gray-600 text-right">Don't have an account? <a href="{{ url_for('signup.signup_func') }}" class="text-blue-500">Sign up</a></p>
         </div>
 
+        <script>
+            function login() {
+                $.ajax({
+                    type: "POST",
+                    url: "/login",
+                    data: { 'email': $('#email').val(), 'password': $('#password').val()},
+                    success: function (response) {
+                        if (response['result'] == 'success') {
+                            $.cookie('mytoken', response['token'], { expires: 7, path:'/'});
+
+                            alert('로그인 완료!')
+                            alert(response['email'])
+                            if (response['email'] == 'admin') {
+                                window.location.replace("/admin")
+                            } else {
+                                window.location.replace("/main")
+                            }
+                        } else {
+                            alert(response['msg'])
+                        }
+                    },
+                });
+            }
+        </script>
     </body>
 </html>
 

@@ -24,7 +24,7 @@
                     <h5 class="text-xl mb-4 text-center">당신의 마니또를 찾아보세요!</h5>
                     <div class="text-center">
 
-                        <a onclick="openModal()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">RULE</a>
+                        <a id="rule-btn" onclick="openModal()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">RULE</a>
                         <a href="{{ url_for('login.login_func') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">START</a>
 
                     </div>
@@ -49,21 +49,22 @@
                 <button id="close-btn" class="mt-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mx-auto" onclick="closeModal()" >Close</button>
             </div>
         </div>
-    </body>
-
         <!-- JavaScript -->
         <script>
             function openModal() {
                 document.getElementById('modal').style.display = 'flex';
             }
-
+        
             function closeModal() {
                 document.getElementById('modal').style.display = 'none';
             }
-
+        
             // "RULE" 버튼에 클릭 이벤트 연결
             document.getElementById('rule-btn').addEventListener('click', openModal);
             // "Close" 버튼에 클릭 이벤트 연결
             document.getElementById('close-btn').addEventListener('click', closeModal);
         </script>
+    </body>
+
+
 </html>
